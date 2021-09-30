@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class RemoteStarWarsLoader {
+public class RemoteStarWarsLoader: StarWarsLoader {
     private let client: HTTPClient
     private let url: URL
 
@@ -16,10 +16,7 @@ public class RemoteStarWarsLoader {
         case invalidData
     }
 
-    public enum Result: Equatable {
-        case success(People)
-        case failure(Error)
-    }
+    public typealias Result = LoadStarWarsResult
 
     public init(url: URL, client: HTTPClient) {
         self.client = client
@@ -34,10 +31,10 @@ public class RemoteStarWarsLoader {
                     if response.statusCode == 200, let root = try? JSONDecoder().decode(Root.self, from: data) {
                         completion(.success(root.people))
                     } else {
-                        completion(.failure(.invalidData))
+                        completion(.failure(Error.invalidData))
                     }
                 case .failure:
-                    completion(.failure(.connectivity))
+                    completion(.failure(Error.connectivity))
             }
         }
     }

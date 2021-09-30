@@ -38,7 +38,7 @@ class RemoteStarWarsLoaderTests: XCTestCase {
     func test_load_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
 
-        expect(sut, toCompleteWith: .failure(.connectivity), when: {
+        expect(sut, toCompleteWith: failure(.connectivity), when: {
             let clientError = NSError(domain: "an error", code: 0)
             client.complete(with: clientError)
         })
@@ -50,7 +50,7 @@ class RemoteStarWarsLoaderTests: XCTestCase {
         let samples = [199, 201, 300, 400, 500]
 
         samples.enumerated().forEach { index, code in
-            expect(sut, toCompleteWith: .failure(.invalidData), when: {
+            expect(sut, toCompleteWith: failure(.invalidData), when: {
                 client.complete(withStatusCode: code, data: Data(), at: index)
             })
         }
@@ -59,7 +59,7 @@ class RemoteStarWarsLoaderTests: XCTestCase {
     func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() {
         let (sut, client) = makeSUT()
 
-        expect(sut, toCompleteWith: .failure(.invalidData), when: {
+        expect(sut, toCompleteWith: failure(.invalidData), when: {
             let invalidJSON = Data("invalidJSON".utf8)
             client.complete(withStatusCode: 200, data: invalidJSON)
         })
@@ -118,13 +118,29 @@ class RemoteStarWarsLoaderTests: XCTestCase {
         }
     }
 
-    private func expect(_ sut: RemoteStarWarsLoader, toCompleteWith result: RemoteStarWarsLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
-        var capturedResults = [RemoteStarWarsLoader.Result]()
-        sut.load { capturedResults.append($0) }
+    private func failure(_ error: RemoteStarWarsLoader.Error) -> RemoteStarWarsLoader.Result {
+        .failure(error)
+    }
+
+    private func expect(_ sut: RemoteStarWarsLoader, toCompleteWith expectedResult: RemoteStarWarsLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Wait for load completion")
+
+        sut.load { receivedResult in
+            switch (receivedResult, expectedResult) {
+                case let (.success(receivedInfo), .success(expectedInfo)):
+                    XCTAssertEqual(receivedInfo, expectedInfo, file: file, line: line)
+                case let (.failure(receivedError as RemoteStarWarsLoader.Error), .failure(expectedError as RemoteStarWarsLoader.Error)):
+                    XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+                default:
+                    XCTFail("Expected result \(expectedResult) got \(receivedResult) instead", file: file, line: line)
+            }
+
+            exp.fulfill()
+        }
 
         action()
 
-        XCTAssertEqual(capturedResults, [result], file: file, line: line)
+        wait(for: [exp], timeout: 1.0)
     }
 
     private class HTTPClientSpy: HTTPClient {

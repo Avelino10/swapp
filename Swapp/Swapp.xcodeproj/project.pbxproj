@@ -81,12 +81,11 @@
 		FDB91FF22705C74700A0BB82 /* Swapp */ = {
 			isa = PBXGroup;
 			children = (
+				FDB9201A2705D73F00A0BB82 /* StarWars Feature */,
 				FDB920142705CE4700A0BB82 /* StarWars API */,
-				FDB920082705C82B00A0BB82 /* People.swift */,
 				FDB9200A2705C94100A0BB82 /* Film.swift */,
 				FDB9200C2705C99300A0BB82 /* Vehicle.swift */,
 				FDB9200E2705C9CE00A0BB82 /* Species.swift */,
-				FDB920102705CA1800A0BB82 /* StarWarsLoader.swift */,
 			);
 			path = Swapp;
 			sourceTree = "<group>";
@@ -94,7 +93,7 @@
 		FDB91FFC2705C74700A0BB82 /* SwappTests */ = {
 			isa = PBXGroup;
 			children = (
-				FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */,
+				FDB920192705D72C00A0BB82 /* StarWars API */,
 			);
 			path = SwappTests;
 			sourceTree = "<group>";
@@ -106,6 +105,23 @@
 				FDB920172705D67E00A0BB82 /* HTTPClient.swift */,
 			);
 			path = "StarWars API";
+			sourceTree = "<group>";
+		};
+		FDB920192705D72C00A0BB82 /* StarWars API */ = {
+			isa = PBXGroup;
+			children = (
+				FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */,
+			);
+			path = "StarWars API";
+			sourceTree = "<group>";
+		};
+		FDB9201A2705D73F00A0BB82 /* StarWars Feature */ = {
+			isa = PBXGroup;
+			children = (
+				FDB920082705C82B00A0BB82 /* People.swift */,
+				FDB920102705CA1800A0BB82 /* StarWarsLoader.swift */,
+			);
+			path = "StarWars Feature";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

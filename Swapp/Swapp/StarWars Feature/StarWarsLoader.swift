@@ -7,11 +7,11 @@
 
 import Foundation
 
-enum LoadStarWarsResult {
+public enum LoadStarWarsResult {
     case success(People)
-    case error(Error)
+    case failure(Error)
 }
 
-protocol StarWarsLoader {
+public protocol StarWarsLoader {
     func load(completion: @escaping (LoadStarWarsResult) -> Void)
 }
