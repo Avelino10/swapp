@@ -10,13 +10,15 @@ import XCTest
 
 class RemoteStarWarsLoader {
     private let client: HTTPClient
+    private let url: URL
 
-    init(client: HTTPClient) {
+    init(url: URL, client: HTTPClient) {
         self.client = client
+        self.url = url
     }
 
     func load() {
-        client.get(from: URL(string: "https://a-url.com")!)
+        client.get(from: url)
     }
 }
 
@@ -34,18 +36,20 @@ class HTTPClientSpy: HTTPClient {
 
 class RemoteStarWarsLoaderTests: XCTestCase {
     func test_init_doesNotRequestDataFromURL() {
+        let url = URL(string: "https://a-url.com")!
         let client = HTTPClientSpy()
-        _ = RemoteStarWarsLoader(client: client)
+        _ = RemoteStarWarsLoader(url: url, client: client)
 
         XCTAssertNil(client.requestedURL)
     }
 
     func test_load_requestDataFromURL() {
+        let url = URL(string: "https://a-url.com")!
         let client = HTTPClientSpy()
-        let sut = RemoteStarWarsLoader(client: client)
+        let sut = RemoteStarWarsLoader(url: url, client: client)
 
         sut.load()
 
-        XCTAssertNotNil(client.requestedURL)
+        XCTAssertEqual(client.requestedURL, url)
     }
 }
