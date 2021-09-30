@@ -85,14 +85,22 @@ class RemoteStarWarsLoaderTests: XCTestCase {
         })
     }
 
-
     // MARK: - Helpers
 
     private func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteStarWarsLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteStarWarsLoader(url: url, client: client)
 
+        trackMemoryLeaks(client)
+        trackMemoryLeaks(sut)
+
         return (sut, client)
+    }
+
+    private func trackMemoryLeaks(_ instance: AnyObject, file: StaticString = #file, line: UInt = #line) {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(instance, "Instance should have been deallocated. Potential memory leak.", file: file, line: line)
+        }
     }
 
     private func expect(_ sut: RemoteStarWarsLoader, toCompleteWith result: RemoteStarWarsLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
