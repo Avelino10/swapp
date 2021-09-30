@@ -15,6 +15,7 @@
 		FDB920112705CA1800A0BB82 /* StarWarsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920102705CA1800A0BB82 /* StarWarsLoader.swift */; };
 		FDB920132705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */; };
 		FDB920162705CE5800A0BB82 /* RemoteStarWarsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920152705CE5800A0BB82 /* RemoteStarWarsLoader.swift */; };
+		FDB920182705D67E00A0BB82 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920172705D67E00A0BB82 /* HTTPClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,7 @@
 		FDB920102705CA1800A0BB82 /* StarWarsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarWarsLoader.swift; sourceTree = "<group>"; };
 		FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteStarWarsLoaderTests.swift; sourceTree = "<group>"; };
 		FDB920152705CE5800A0BB82 /* RemoteStarWarsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteStarWarsLoader.swift; sourceTree = "<group>"; };
+		FDB920172705D67E00A0BB82 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				FDB920152705CE5800A0BB82 /* RemoteStarWarsLoader.swift */,
+				FDB920172705D67E00A0BB82 /* HTTPClient.swift */,
 			);
 			path = "StarWars API";
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				FDB9200F2705C9CE00A0BB82 /* Species.swift in Sources */,
 				FDB9200D2705C99300A0BB82 /* Vehicle.swift in Sources */,
 				FDB920092705C82B00A0BB82 /* People.swift in Sources */,
+				FDB920182705D67E00A0BB82 /* HTTPClient.swift in Sources */,
 				FDB920162705CE5800A0BB82 /* RemoteStarWarsLoader.swift in Sources */,
 				FDB920112705CA1800A0BB82 /* StarWarsLoader.swift in Sources */,
 				FDB9200B2705C94100A0BB82 /* Film.swift in Sources */,
