@@ -13,6 +13,7 @@
 		FDB9200D2705C99300A0BB82 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB9200C2705C99300A0BB82 /* Vehicle.swift */; };
 		FDB9200F2705C9CE00A0BB82 /* Species.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB9200E2705C9CE00A0BB82 /* Species.swift */; };
 		FDB920112705CA1800A0BB82 /* StarWarsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920102705CA1800A0BB82 /* StarWarsLoader.swift */; };
+		FDB920132705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +34,7 @@
 		FDB9200C2705C99300A0BB82 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		FDB9200E2705C9CE00A0BB82 /* Species.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Species.swift; sourceTree = "<group>"; };
 		FDB920102705CA1800A0BB82 /* StarWarsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarWarsLoader.swift; sourceTree = "<group>"; };
+		FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteStarWarsLoaderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 		FDB91FFC2705C74700A0BB82 /* SwappTests */ = {
 			isa = PBXGroup;
 			children = (
+				FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */,
 			);
 			path = SwappTests;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 					};
 					FDB91FF72705C74700A0BB82 = {
 						CreatedOnToolsVersion = 13.0;
+						LastSwiftMigration = 1300;
 					};
 				};
 			};
@@ -212,6 +216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDB920132705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +413,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -421,6 +427,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.avelino.SwappTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -429,6 +436,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
