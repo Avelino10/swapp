@@ -14,6 +14,7 @@
 		FDB9200F2705C9CE00A0BB82 /* Species.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB9200E2705C9CE00A0BB82 /* Species.swift */; };
 		FDB920112705CA1800A0BB82 /* StarWarsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920102705CA1800A0BB82 /* StarWarsLoader.swift */; };
 		FDB920132705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */; };
+		FDB920162705CE5800A0BB82 /* RemoteStarWarsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920152705CE5800A0BB82 /* RemoteStarWarsLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 		FDB9200E2705C9CE00A0BB82 /* Species.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Species.swift; sourceTree = "<group>"; };
 		FDB920102705CA1800A0BB82 /* StarWarsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarWarsLoader.swift; sourceTree = "<group>"; };
 		FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteStarWarsLoaderTests.swift; sourceTree = "<group>"; };
+		FDB920152705CE5800A0BB82 /* RemoteStarWarsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteStarWarsLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		FDB91FF22705C74700A0BB82 /* Swapp */ = {
 			isa = PBXGroup;
 			children = (
+				FDB920142705CE4700A0BB82 /* StarWars API */,
 				FDB920082705C82B00A0BB82 /* People.swift */,
 				FDB9200A2705C94100A0BB82 /* Film.swift */,
 				FDB9200C2705C99300A0BB82 /* Vehicle.swift */,
@@ -92,6 +95,14 @@
 				FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */,
 			);
 			path = SwappTests;
+			sourceTree = "<group>";
+		};
+		FDB920142705CE4700A0BB82 /* StarWars API */ = {
+			isa = PBXGroup;
+			children = (
+				FDB920152705CE5800A0BB82 /* RemoteStarWarsLoader.swift */,
+			);
+			path = "StarWars API";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,6 +218,7 @@
 				FDB9200F2705C9CE00A0BB82 /* Species.swift in Sources */,
 				FDB9200D2705C99300A0BB82 /* Vehicle.swift in Sources */,
 				FDB920092705C82B00A0BB82 /* People.swift in Sources */,
+				FDB920162705CE5800A0BB82 /* RemoteStarWarsLoader.swift in Sources */,
 				FDB920112705CA1800A0BB82 /* StarWarsLoader.swift in Sources */,
 				FDB9200B2705C94100A0BB82 /* Film.swift in Sources */,
 			);

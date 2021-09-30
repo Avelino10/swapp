@@ -6,25 +6,8 @@
 //
 
 import Foundation
+import Swapp
 import XCTest
-
-class RemoteStarWarsLoader {
-    private let client: HTTPClient
-    private let url: URL
-
-    init(url: URL, client: HTTPClient) {
-        self.client = client
-        self.url = url
-    }
-
-    func load() {
-        client.get(from: url)
-    }
-}
-
-protocol HTTPClient {
-    func get(from url: URL)
-}
 
 class RemoteStarWarsLoaderTests: XCTestCase {
     func test_init_doesNotRequestDataFromURL() {
