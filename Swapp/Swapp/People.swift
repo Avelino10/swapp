@@ -7,11 +7,20 @@
 
 import Foundation
 
-struct People {
-    let name: String
-    let gender: String
-    let skinColor: String
-    let species: [URL]
-    let vehicles: [URL]
-    let films: [URL]
+public struct People: Equatable {
+    public let name: String
+    public let gender: String
+    public let skinColor: String
+    public let species: [URL]
+    public let vehicles: [URL]
+    public let films: [URL]
+
+    public init(name: String, gender: String, skinColor: String, species: [URL], vehicles: [URL], films: [URL]) {
+        self.name = name
+        self.gender = gender
+        self.skinColor = skinColor
+        self.species = species
+        self.vehicles = vehicles
+        self.films = films
+    }
 }

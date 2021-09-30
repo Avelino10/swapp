@@ -26,7 +26,7 @@ public class RemoteStarWarsLoader {
     }
 
     public enum Result: Equatable {
-        case success
+        case success(People)
         case failure(Error)
     }
 
@@ -38,11 +38,28 @@ public class RemoteStarWarsLoader {
     public func load(completion: @escaping (Result) -> Void) {
         client.get(from: url) { result in
             switch result {
-                case .success:
-                    completion(.failure(.invalidData))
+                case let .success(data, response):
+                    if response.statusCode == 200, let root = try? JSONDecoder().decode(Root.self, from: data) {
+                        completion(.success(root.people))
+                    } else {
+                        completion(.failure(.invalidData))
+                    }
                 case .failure:
                     completion(.failure(.connectivity))
             }
         }
+    }
+}
+
+private struct Root: Decodable {
+    let name: String
+    let gender: String
+    let skin_color: String
+    let species: [URL]
+    let vehicles: [URL]
+    let films: [URL]
+
+    var people: People {
+        People(name: name, gender: gender, skinColor: skin_color, species: species, vehicles: vehicles, films: films)
     }
 }
