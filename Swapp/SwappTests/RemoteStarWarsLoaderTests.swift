@@ -20,7 +20,7 @@ class RemoteStarWarsLoaderTests: XCTestCase {
         let url = URL(string: "https://a-given-url.com")!
         let (sut, client) = makeSUT(url: url)
 
-        sut.load()
+        sut.load { _ in }
 
         XCTAssertEqual(client.requestedURLs, [url])
     }
@@ -29,10 +29,23 @@ class RemoteStarWarsLoaderTests: XCTestCase {
         let url = URL(string: "https://a-given-url.com")!
         let (sut, client) = makeSUT(url: url)
 
-        sut.load()
-        sut.load()
+        sut.load { _ in }
+        sut.load { _ in }
 
         XCTAssertEqual(client.requestedURLs, [url, url])
+    }
+
+    func test_load_deliversErrorOnClientError() {
+        let (sut, client) = makeSUT()
+
+        var capturedError = [RemoteStarWarsLoader.Error]()
+
+        sut.load { capturedError.append($0) }
+
+        let clientError = NSError(domain: "an error", code: 0)
+        client.complete(with: clientError)
+
+        XCTAssertEqual(capturedError, [.connectivity])
     }
 
     // MARK: - Helpers
@@ -45,10 +58,17 @@ class RemoteStarWarsLoaderTests: XCTestCase {
     }
 
     private class HTTPClientSpy: HTTPClient {
-        var requestedURLs = [URL]()
+        private var messages = [(url: URL, completion: (Error) -> Void)]()
+        var requestedURLs: [URL] {
+            messages.map { $0.url }
+        }
 
-        func get(from url: URL) {
-            requestedURLs.append(url)
+        func get(from url: URL, completion: @escaping (Error) -> Void) {
+            messages.append((url, completion))
+        }
+
+        func complete(with error: Error, at index: Int = 0) {
+            messages[index].completion(error)
         }
     }
 }
