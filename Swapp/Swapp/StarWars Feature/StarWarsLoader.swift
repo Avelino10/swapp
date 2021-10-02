@@ -7,11 +7,8 @@
 
 import Foundation
 
-public enum LoadStarWarsResult {
-    case success(People)
-    case failure(Error)
-}
-
 public protocol StarWarsLoader {
-    func load(completion: @escaping (LoadStarWarsResult) -> Void)
+    typealias Result = Swift.Result<People, Error>
+
+    func load(completion: @escaping (Result) -> Void)
 }

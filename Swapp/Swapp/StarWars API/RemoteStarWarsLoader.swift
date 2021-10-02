@@ -16,7 +16,7 @@ public class RemoteStarWarsLoader: StarWarsLoader {
         case invalidData
     }
 
-    public typealias Result = LoadStarWarsResult
+    public typealias Result = StarWarsLoader.Result
 
     public init(url: URL, client: HTTPClient) {
         self.client = client
@@ -27,7 +27,7 @@ public class RemoteStarWarsLoader: StarWarsLoader {
         client.get(from: url) { [weak self] result in
             guard self != nil else { return }
             switch result {
-                case let .success(data, response):
+                case let .success((data, response)):
                     if response.statusCode == 200, let peopleAPI = try? JSONDecoder().decode(PeopleAPI.self, from: data) {
                         completion(.success(peopleAPI.people))
                     } else {
