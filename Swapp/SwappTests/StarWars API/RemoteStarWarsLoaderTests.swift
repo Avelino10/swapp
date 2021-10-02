@@ -65,23 +65,89 @@ class RemoteStarWarsLoaderTests: XCTestCase {
         })
     }
 
-    func test_load_deliversPeopleOn200HTTPResponseWithValidJSON() {
+    func test_load_deliversSuccessOnClientErrorForSpeciesRequest() {
         let (sut, client) = makeSUT()
 
         let people = People(name: "people", gender: "male", skinColor: "black", species: [], vehicles: [], films: [])
 
-        let peopleJSON = [
+        let peopleDict = [
             "name": people.name,
             "gender": people.gender,
             "skin_color": people.skinColor,
-            "species": people.species,
+            "species":
+                ["http://any-url.com",
+                 "http://any-url.com"],
             "vehicles": people.vehicles,
             "films": people.films,
         ] as [String: Any]
 
         expect(sut, toCompleteWith: .success(people), when: {
-            let json = try! JSONSerialization.data(withJSONObject: peopleJSON)
-            client.complete(withStatusCode: 200, data: json)
+            let peopleJson = try! JSONSerialization.data(withJSONObject: peopleDict)
+            client.complete(withStatusCode: 200, data: peopleJson, at: 0)
+            let clientError = NSError(domain: "an error", code: 0)
+            client.complete(with: clientError, at: 1)
+            client.complete(with: clientError, at: 2)
+        })
+    }
+
+    func test_load_deliversSuccessWith1SpecieOnClientErrorForSecondSpeciesRequest() {
+        let (sut, client) = makeSUT()
+
+        let species = Species(name: "species", language: "portuguese")
+        let people = People(name: "people", gender: "male", skinColor: "black", species: [species], vehicles: [], films: [])
+
+        let peopleDict = [
+            "name": people.name,
+            "gender": people.gender,
+            "skin_color": people.skinColor,
+            "species":
+                ["http://any-url.com",
+                 "http://any-url.com"],
+            "vehicles": people.vehicles,
+            "films": people.films,
+        ] as [String: Any]
+
+        let speciesDict = [
+            "name": species.name,
+            "language": species.language,
+        ] as [String: Any]
+
+        expect(sut, toCompleteWith: .success(people), when: {
+            let peopleJson = try! JSONSerialization.data(withJSONObject: peopleDict)
+            client.complete(withStatusCode: 200, data: peopleJson, at: 0)
+            let speciesJson = try! JSONSerialization.data(withJSONObject: speciesDict)
+            client.complete(withStatusCode: 200, data: speciesJson, at: 1)
+            let clientError = NSError(domain: "an error", code: 0)
+            client.complete(with: clientError, at: 2)
+        })
+    }
+
+    func test_load_deliversPeopleOn200HTTPResponseWithValidJSON() {
+        let (sut, client) = makeSUT()
+
+        let species = Species(name: "species", language: "portuguese")
+        let people = People(name: "people", gender: "male", skinColor: "black", species: [species], vehicles: [], films: [])
+
+        let peopleDict = [
+            "name": people.name,
+            "gender": people.gender,
+            "skin_color": people.skinColor,
+            "species":
+                ["http://any-url.com"],
+            "vehicles": people.vehicles,
+            "films": people.films,
+        ] as [String: Any]
+
+        let speciesDict = [
+            "name": species.name,
+            "language": species.language,
+        ] as [String: Any]
+
+        expect(sut, toCompleteWith: .success(people), when: {
+            let peopleJson = try! JSONSerialization.data(withJSONObject: peopleDict)
+            let speciesJson = try! JSONSerialization.data(withJSONObject: speciesDict)
+            client.complete(withStatusCode: 200, data: peopleJson, at: 0)
+            client.complete(withStatusCode: 200, data: speciesJson, at: 1)
         })
     }
 

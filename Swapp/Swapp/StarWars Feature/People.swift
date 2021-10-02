@@ -11,11 +11,11 @@ public struct People: Equatable {
     public let name: String
     public let gender: String
     public let skinColor: String
-    public let species: [URL]
-    public let vehicles: [URL]
-    public let films: [URL]
+    public var species: [Species]
+    public var vehicles: [Vehicle]
+    public var films: [Film]
 
-    public init(name: String, gender: String, skinColor: String, species: [URL], vehicles: [URL], films: [URL]) {
+    public init(name: String, gender: String, skinColor: String, species: [Species], vehicles: [Vehicle], films: [Film]) {
         self.name = name
         self.gender = gender
         self.skinColor = skinColor

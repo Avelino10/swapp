@@ -10,6 +10,7 @@ import Foundation
 public class RemoteStarWarsLoader: StarWarsLoader {
     private let client: HTTPClient
     private let url: URL
+    private let queue = DispatchQueue(label: "RemoteStarWarsLoaderQueue", attributes: .concurrent)
 
     public enum Error: Swift.Error {
         case connectivity
@@ -28,14 +29,41 @@ public class RemoteStarWarsLoader: StarWarsLoader {
             guard self != nil else { return }
             switch result {
                 case let .success((data, response)):
-                    if response.statusCode == 200, let peopleAPI = try? JSONDecoder().decode(PeopleAPI.self, from: data) {
-                        completion(.success(peopleAPI.people))
+                    if response.statusCode == 200, let peopleApi = try? JSONDecoder().decode(PeopleAPI.self, from: data) {
+                        self?.getSpecies(peopleApi.species, people: peopleApi.people, completion: completion)
                     } else {
                         completion(.failure(Error.invalidData))
                     }
                 case .failure:
                     completion(.failure(Error.connectivity))
             }
+        }
+    }
+
+    private func getSpecies(_ url: [URL], people: People, completion: @escaping (Result) -> Void) {
+        var people = people
+        var species = [Species]()
+        let dispatchGroup = DispatchGroup()
+        for speciesUrl in url {
+            dispatchGroup.enter()
+            client.get(from: speciesUrl) { [weak self] result in
+                guard self != nil else { return }
+                switch result {
+                    case let .success((data, response)):
+                        if response.statusCode == 200, let rootSpecies = try? JSONDecoder().decode(SpeciesAPI.self, from: data) {
+                            species.append(rootSpecies.species)
+                        }
+                    case .failure:
+                        break
+                }
+
+                dispatchGroup.leave()
+            }
+        }
+
+        dispatchGroup.notify(queue: .main) {
+            people.species = species
+            completion(.success(people))
         }
     }
 }
@@ -49,6 +77,15 @@ private struct PeopleAPI: Decodable {
     let films: [URL]
 
     var people: People {
-        People(name: name, gender: gender, skinColor: skin_color, species: species, vehicles: vehicles, films: films)
+        People(name: name, gender: gender, skinColor: skin_color, species: [], vehicles: [], films: [])
+    }
+}
+
+private struct SpeciesAPI: Decodable {
+    let name: String
+    let language: String
+
+    var species: Species {
+        Species(name: name, language: language)
     }
 }
