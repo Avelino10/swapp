@@ -16,6 +16,7 @@
 		FDB920132705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */; };
 		FDB920162705CE5800A0BB82 /* RemoteStarWarsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920152705CE5800A0BB82 /* RemoteStarWarsLoader.swift */; };
 		FDB920182705D67E00A0BB82 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920172705D67E00A0BB82 /* HTTPClient.swift */; };
+		FDB9201C2705D82400A0BB82 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB9201B2705D82400A0BB82 /* URLSessionHTTPClientTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteStarWarsLoaderTests.swift; sourceTree = "<group>"; };
 		FDB920152705CE5800A0BB82 /* RemoteStarWarsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteStarWarsLoader.swift; sourceTree = "<group>"; };
 		FDB920172705D67E00A0BB82 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		FDB9201B2705D82400A0BB82 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,9 +85,6 @@
 			children = (
 				FDB9201A2705D73F00A0BB82 /* StarWars Feature */,
 				FDB920142705CE4700A0BB82 /* StarWars API */,
-				FDB9200A2705C94100A0BB82 /* Film.swift */,
-				FDB9200C2705C99300A0BB82 /* Vehicle.swift */,
-				FDB9200E2705C9CE00A0BB82 /* Species.swift */,
 			);
 			path = Swapp;
 			sourceTree = "<group>";
@@ -111,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */,
+				FDB9201B2705D82400A0BB82 /* URLSessionHTTPClientTests.swift */,
 			);
 			path = "StarWars API";
 			sourceTree = "<group>";
@@ -119,6 +119,9 @@
 			isa = PBXGroup;
 			children = (
 				FDB920082705C82B00A0BB82 /* People.swift */,
+				FDB9200A2705C94100A0BB82 /* Film.swift */,
+				FDB9200C2705C99300A0BB82 /* Vehicle.swift */,
+				FDB9200E2705C9CE00A0BB82 /* Species.swift */,
 				FDB920102705CA1800A0BB82 /* StarWarsLoader.swift */,
 			);
 			path = "StarWars Feature";
@@ -249,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDB920132705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift in Sources */,
+				FDB9201C2705D82400A0BB82 /* URLSessionHTTPClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

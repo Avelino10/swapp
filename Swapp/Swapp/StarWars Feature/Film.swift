@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Film {
-    let title: String
+public struct Film: Equatable {
+    public let title: String
 }

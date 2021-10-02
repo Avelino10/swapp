@@ -28,8 +28,8 @@ public class RemoteStarWarsLoader: StarWarsLoader {
             guard self != nil else { return }
             switch result {
                 case let .success(data, response):
-                    if response.statusCode == 200, let root = try? JSONDecoder().decode(Root.self, from: data) {
-                        completion(.success(root.people))
+                    if response.statusCode == 200, let peopleAPI = try? JSONDecoder().decode(PeopleAPI.self, from: data) {
+                        completion(.success(peopleAPI.people))
                     } else {
                         completion(.failure(Error.invalidData))
                     }
@@ -40,7 +40,7 @@ public class RemoteStarWarsLoader: StarWarsLoader {
     }
 }
 
-private struct Root: Decodable {
+private struct PeopleAPI: Decodable {
     let name: String
     let gender: String
     let skin_color: String
