@@ -122,7 +122,7 @@ class RemoteStarWarsLoaderTests: XCTestCase {
         })
     }
 
-    func test_load_deliversPeopleOn200HTTPResponseWithValidJSON() {
+    func test_load_deliversPeopleWithSpeciesOn200HTTPResponseWithValidJSON() {
         let (sut, client) = makeSUT()
 
         let species = Species(name: "species", language: "portuguese")
@@ -132,10 +132,9 @@ class RemoteStarWarsLoaderTests: XCTestCase {
             "name": people.name,
             "gender": people.gender,
             "skin_color": people.skinColor,
-            "species":
-                ["http://any-url.com"],
-            "vehicles": people.vehicles,
-            "films": people.films,
+            "species": ["http://any-species-url.com"],
+            "vehicles": [],
+            "films": [],
         ] as [String: Any]
 
         let speciesDict = [
@@ -143,11 +142,40 @@ class RemoteStarWarsLoaderTests: XCTestCase {
             "language": species.language,
         ] as [String: Any]
 
+
+
         expect(sut, toCompleteWith: .success(people), when: {
             let peopleJson = try! JSONSerialization.data(withJSONObject: peopleDict)
             let speciesJson = try! JSONSerialization.data(withJSONObject: speciesDict)
             client.complete(withStatusCode: 200, data: peopleJson, at: 0)
             client.complete(withStatusCode: 200, data: speciesJson, at: 1)
+        })
+    }
+
+    func test_load_deliversPeopleWithVehiclesOn200HTTPResponseWithValidJSON() {
+        let (sut, client) = makeSUT()
+
+        let vehicle = Vehicle(name: "vehicles")
+        let people = People(name: "people", gender: "male", skinColor: "black", species: [], vehicles: [vehicle], films: [])
+
+        let peopleDict = [
+            "name": people.name,
+            "gender": people.gender,
+            "skin_color": people.skinColor,
+            "species": [],
+            "vehicles": ["http://any-vehicle-url.com"],
+            "films": [],
+        ] as [String: Any]
+
+        let vehicleDict = [
+            "name": vehicle.name,
+        ] as [String: Any]
+
+        expect(sut, toCompleteWith: .success(people), when: {
+            let peopleJson = try! JSONSerialization.data(withJSONObject: peopleDict)
+            let vehicleJson = try! JSONSerialization.data(withJSONObject: vehicleDict)
+            client.complete(withStatusCode: 200, data: peopleJson, at: 0)
+            client.complete(withStatusCode: 200, data: vehicleJson, at: 1)
         })
     }
 

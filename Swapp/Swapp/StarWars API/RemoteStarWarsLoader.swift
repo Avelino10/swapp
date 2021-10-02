@@ -10,7 +10,6 @@ import Foundation
 public class RemoteStarWarsLoader: StarWarsLoader {
     private let client: HTTPClient
     private let url: URL
-    private let queue = DispatchQueue(label: "RemoteStarWarsLoaderQueue", attributes: .concurrent)
 
     public enum Error: Swift.Error {
         case connectivity
@@ -30,7 +29,13 @@ public class RemoteStarWarsLoader: StarWarsLoader {
             switch result {
                 case let .success((data, response)):
                     if response.statusCode == 200, let peopleApi = try? JSONDecoder().decode(PeopleAPI.self, from: data) {
-                        self?.getSpecies(peopleApi.species, people: peopleApi.people, completion: completion)
+                        self?.getSpecies(peopleApi.species, people: peopleApi.people) { speciesResult in
+                            if let people = try? speciesResult.get() {
+                                self?.getVehicles(peopleApi.vehicles, people: people, completion: completion)
+                            } else {
+                                completion(.success(peopleApi.people))
+                            }
+                        }
                     } else {
                         completion(.failure(Error.invalidData))
                     }
@@ -39,8 +44,15 @@ public class RemoteStarWarsLoader: StarWarsLoader {
             }
         }
     }
+}
 
+extension RemoteStarWarsLoader {
     private func getSpecies(_ url: [URL], people: People, completion: @escaping (Result) -> Void) {
+        guard !url.isEmpty else {
+            completion(.success(people))
+            return
+        }
+
         var people = people
         var species = [Species]()
         let dispatchGroup = DispatchGroup()
@@ -50,8 +62,8 @@ public class RemoteStarWarsLoader: StarWarsLoader {
                 guard self != nil else { return }
                 switch result {
                     case let .success((data, response)):
-                        if response.statusCode == 200, let rootSpecies = try? JSONDecoder().decode(SpeciesAPI.self, from: data) {
-                            species.append(rootSpecies.species)
+                        if response.statusCode == 200, let speciesAPI = try? JSONDecoder().decode(SpeciesAPI.self, from: data) {
+                            species.append(speciesAPI.species)
                         }
                     case .failure:
                         break
@@ -63,6 +75,40 @@ public class RemoteStarWarsLoader: StarWarsLoader {
 
         dispatchGroup.notify(queue: .main) {
             people.species = species
+            completion(.success(people))
+        }
+    }
+}
+
+extension RemoteStarWarsLoader {
+    private func getVehicles(_ url: [URL], people: People, completion: @escaping (Result) -> Void) {
+        guard !url.isEmpty else {
+            completion(.success(people))
+            return
+        }
+
+        var people = people
+        var vehicles = [Vehicle]()
+        let dispatchGroup = DispatchGroup()
+        for vehiclesUrl in url {
+            dispatchGroup.enter()
+            client.get(from: vehiclesUrl) { [weak self] result in
+                guard self != nil else { return }
+                switch result {
+                    case let .success((data, response)):
+                        if response.statusCode == 200, let vehiclesAPI = try? JSONDecoder().decode(VehiclesAPI.self, from: data) {
+                            vehicles.append(vehiclesAPI.vehicle)
+                        }
+                    case .failure:
+                        break
+                }
+
+                dispatchGroup.leave()
+            }
+        }
+
+        dispatchGroup.notify(queue: .main) {
+            people.vehicles = vehicles
             completion(.success(people))
         }
     }
@@ -87,5 +133,13 @@ private struct SpeciesAPI: Decodable {
 
     var species: Species {
         Species(name: name, language: language)
+    }
+}
+
+private struct VehiclesAPI: Decodable {
+    let name: String
+
+    var vehicle: Vehicle {
+        Vehicle(name: name)
     }
 }
