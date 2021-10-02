@@ -179,6 +179,33 @@ class RemoteStarWarsLoaderTests: XCTestCase {
         })
     }
 
+    func test_load_deliversPeopleWithFilmsOn200HTTPResponseWithValidJSON() {
+        let (sut, client) = makeSUT()
+
+        let film = Film(title: "film")
+        let people = People(name: "people", gender: "male", skinColor: "black", species: [], vehicles: [], films: [film])
+
+        let peopleDict = [
+            "name": people.name,
+            "gender": people.gender,
+            "skin_color": people.skinColor,
+            "species": [],
+            "vehicles": [],
+            "films": ["http://any-vehicle-url.com"],
+        ] as [String: Any]
+
+        let filmDict = [
+            "title": film.title,
+        ] as [String: Any]
+
+        expect(sut, toCompleteWith: .success(people), when: {
+            let peopleJson = try! JSONSerialization.data(withJSONObject: peopleDict)
+            let filmJson = try! JSONSerialization.data(withJSONObject: filmDict)
+            client.complete(withStatusCode: 200, data: peopleJson, at: 0)
+            client.complete(withStatusCode: 200, data: filmJson, at: 1)
+        })
+    }
+
     func test_load_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
         let url = URL(string: "http://any-url.com")!
         let client = HTTPClientSpy()

@@ -9,4 +9,8 @@ import Foundation
 
 public struct Film: Equatable {
     public let title: String
+
+    public init(title: String) {
+        self.title = title
+    }
 }

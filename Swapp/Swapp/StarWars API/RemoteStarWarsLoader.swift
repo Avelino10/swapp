@@ -31,7 +31,13 @@ public class RemoteStarWarsLoader: StarWarsLoader {
                     if response.statusCode == 200, let peopleApi = try? JSONDecoder().decode(PeopleAPI.self, from: data) {
                         self?.getSpecies(peopleApi.species, people: peopleApi.people) { speciesResult in
                             if let people = try? speciesResult.get() {
-                                self?.getVehicles(peopleApi.vehicles, people: people, completion: completion)
+                                self?.getVehicles(peopleApi.vehicles, people: people) { vehiclesResult in
+                                    if let newPeople = try? vehiclesResult.get() {
+                                        self?.getFilms(peopleApi.films, people: newPeople, completion: completion)
+                                    } else {
+                                        completion(.success(people))
+                                    }
+                                }
                             } else {
                                 completion(.success(peopleApi.people))
                             }
@@ -114,6 +120,40 @@ extension RemoteStarWarsLoader {
     }
 }
 
+extension RemoteStarWarsLoader {
+    private func getFilms(_ url: [URL], people: People, completion: @escaping (Result) -> Void) {
+        guard !url.isEmpty else {
+            completion(.success(people))
+            return
+        }
+
+        var people = people
+        var films = [Film]()
+        let dispatchGroup = DispatchGroup()
+        for filmsUrl in url {
+            dispatchGroup.enter()
+            client.get(from: filmsUrl) { [weak self] result in
+                guard self != nil else { return }
+                switch result {
+                    case let .success((data, response)):
+                        if response.statusCode == 200, let filmsAPI = try? JSONDecoder().decode(FilmsAPI.self, from: data) {
+                            films.append(filmsAPI.film)
+                        }
+                    case .failure:
+                        break
+                }
+
+                dispatchGroup.leave()
+            }
+        }
+
+        dispatchGroup.notify(queue: .main) {
+            people.films = films
+            completion(.success(people))
+        }
+    }
+}
+
 private struct PeopleAPI: Decodable {
     let name: String
     let gender: String
@@ -141,5 +181,13 @@ private struct VehiclesAPI: Decodable {
 
     var vehicle: Vehicle {
         Vehicle(name: name)
+    }
+}
+
+private struct FilmsAPI: Decodable {
+    let title: String
+
+    var film: Film {
+        Film(title: title)
     }
 }
