@@ -14,13 +14,17 @@ class RemoteStarWarsImageDataLoader {
         self.client = client
     }
 
+    public enum Error: Swift.Error {
+        case invalidData
+    }
+
     func loadImageData(from url: URL, completion: @escaping (StarWarsImageDataLoader.Result) -> Void) {
         client.get(from: url) { result in
             switch result {
+                case .success:
+                    completion(.failure(Error.invalidData))
                 case let .failure(error):
                     completion(.failure(error))
-                default:
-                    break
             }
         }
     }
@@ -61,6 +65,17 @@ class RemoteStarWarsImageDataLoaderTests: XCTestCase {
         })
     }
 
+    func test_loadImageDataFromURL_deliversInvalidDataErrorOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        let samples = [199, 201, 300, 400, 500]
+
+        samples.enumerated().forEach { index, code in
+            expect(sut, toCompleteWith: failure(.invalidData), when: {
+                client.complete(withStatusCode: code, data: anyData(), at: index)
+            })
+        }
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RemoteStarWarsImageDataLoader, client: HTTPClientSpy) {
@@ -74,6 +89,10 @@ class RemoteStarWarsImageDataLoaderTests: XCTestCase {
 
     private func anyData() -> Data {
         Data("any data".utf8)
+    }
+
+    private func failure(_ error: RemoteStarWarsImageDataLoader.Error) -> StarWarsImageDataLoader.Result {
+        .failure(error)
     }
 
     private func expect(_ sut: RemoteStarWarsImageDataLoader, toCompleteWith expectedResult: StarWarsImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
