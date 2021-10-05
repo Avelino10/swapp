@@ -13,6 +13,9 @@
 		FD05B5242708762900C75E9F /* URLProtocolStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B5232708762900C75E9F /* URLProtocolStub.swift */; };
 		FD05B532270C497C00C75E9F /* SwappiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD05B52A270C497C00C75E9F /* SwappiOS.framework */; };
 		FD05B541270C4B1000C75E9F /* SwappViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B53F270C4A5400C75E9F /* SwappViewControllerTests.swift */; };
+		FD05B542270C4BA900C75E9F /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B51D2708724200C75E9F /* XCTestCase+MemoryLeakTracking.swift */; };
+		FD05B549270C4D1A00C75E9F /* Swapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB91FF02705C74700A0BB82 /* Swapp.framework */; };
+		FD05B54A270C4D1A00C75E9F /* Swapp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FDB91FF02705C74700A0BB82 /* Swapp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FDB91FF92705C74700A0BB82 /* Swapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB91FF02705C74700A0BB82 /* Swapp.framework */; };
 		FDB920092705C82B00A0BB82 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920082705C82B00A0BB82 /* People.swift */; };
 		FDB9200B2705C94100A0BB82 /* Film.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB9200A2705C94100A0BB82 /* Film.swift */; };
@@ -33,6 +36,13 @@
 			remoteGlobalIDString = FD05B529270C497C00C75E9F;
 			remoteInfo = SwappiOS;
 		};
+		FD05B54B270C4D1A00C75E9F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDB91FE72705C74700A0BB82 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FDB91FEF2705C74700A0BB82;
+			remoteInfo = Swapp;
+		};
 		FDB91FFA2705C74700A0BB82 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FDB91FE72705C74700A0BB82 /* Project object */;
@@ -41,6 +51,20 @@
 			remoteInfo = Swapp;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FD05B54D270C4D1A00C75E9F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FD05B54A270C4D1A00C75E9F /* Swapp.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		FD05B51D2708724200C75E9F /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
@@ -68,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD05B549270C4D1A00C75E9F /* Swapp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +147,13 @@
 			path = SwappiOSTests;
 			sourceTree = "<group>";
 		};
+		FD05B543270C4C6C00C75E9F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FDB91FE62705C74700A0BB82 = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +162,7 @@
 				FD05B52B270C497C00C75E9F /* SwappiOS */,
 				FD05B535270C497C00C75E9F /* SwappiOSTests */,
 				FDB91FF12705C74700A0BB82 /* Products */,
+				FD05B543270C4C6C00C75E9F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -221,10 +254,12 @@
 				FD05B526270C497C00C75E9F /* Sources */,
 				FD05B527270C497C00C75E9F /* Frameworks */,
 				FD05B528270C497C00C75E9F /* Resources */,
+				FD05B54D270C4D1A00C75E9F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FD05B54C270C4D1A00C75E9F /* PBXTargetDependency */,
 			);
 			name = SwappiOS;
 			productName = SwappiOS;
@@ -377,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD05B541270C4B1000C75E9F /* SwappViewControllerTests.swift in Sources */,
+				FD05B542270C4BA900C75E9F /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +450,11 @@
 			isa = PBXTargetDependency;
 			target = FD05B529270C497C00C75E9F /* SwappiOS */;
 			targetProxy = FD05B533270C497C00C75E9F /* PBXContainerItemProxy */;
+		};
+		FD05B54C270C4D1A00C75E9F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FDB91FEF2705C74700A0BB82 /* Swapp */;
+			targetProxy = FD05B54B270C4D1A00C75E9F /* PBXContainerItemProxy */;
 		};
 		FDB91FFB2705C74700A0BB82 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -674,6 +715,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.avelino.Swapp;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -703,6 +745,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.avelino.Swapp;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
