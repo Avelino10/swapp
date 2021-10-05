@@ -12,6 +12,7 @@ final class PeopleCellController {
     private let model: People
     private var cell: PeopleCell?
     private let imageLoader: StarWarsImageDataLoader
+    private var task: StarWarsImageDataLoaderTask?
 
     init(model: People, imageDataLoader: StarWarsImageDataLoader) {
         self.model = model
@@ -25,7 +26,7 @@ final class PeopleCellController {
         if !model.species.isEmpty {
             cell?.language.text = model.species[0].language
 
-            imageLoader.loadImageData(with: model.species[0].language)
+            task = imageLoader.loadImageData(with: model.species[0].language)
         } else {
             cell?.language.text = "no species"
         }
@@ -46,5 +47,9 @@ final class PeopleCellController {
         }
 
         return vehicleNames
+    }
+
+    deinit {
+        task?.cancel()
     }
 }

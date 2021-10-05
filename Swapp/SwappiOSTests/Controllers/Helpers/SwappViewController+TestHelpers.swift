@@ -24,7 +24,16 @@ extension SwappViewController {
         0
     }
 
-    func simulatePeopleLanguageImageViewVisible(at index: Int) {
-        _ = peopleCell(at: index)
+    @discardableResult
+    func simulatePeopleLanguageImageViewVisible(at index: Int) -> PeopleCell? {
+        peopleCell(at: index) as? PeopleCell
+    }
+
+    func simulatePeopleLanguageImageViewNotVisible(at row: Int) {
+        let view = simulatePeopleLanguageImageViewVisible(at: row)
+
+        let delegate = tableView.delegate
+        let index = IndexPath(row: row, section: peopleSection)
+        delegate?.tableView?(tableView, didEndDisplaying: view!, forRowAt: index)
     }
 }

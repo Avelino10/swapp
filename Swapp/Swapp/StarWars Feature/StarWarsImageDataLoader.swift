@@ -7,6 +7,10 @@
 
 import Foundation
 
+public protocol StarWarsImageDataLoaderTask {
+    func cancel()
+}
+
 public protocol StarWarsImageDataLoader {
-    func loadImageData(with queryParam: String)
+    func loadImageData(with queryParam: String) -> StarWarsImageDataLoaderTask
 }

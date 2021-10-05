@@ -39,6 +39,10 @@ public final class SwappViewController: UITableViewController {
         cellController(forRowAt: indexPath).view(in: tableView)
     }
 
+    override public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cellControllers[indexPath] = nil
+    }
+
     private func cellController(forRowAt indexPath: IndexPath) -> PeopleCellController {
         let cellModel = tableModel[indexPath.row]
         let cellController = PeopleCellController(model: cellModel, imageDataLoader: imageDataLoader!)

@@ -50,6 +50,20 @@ final class SwappViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadedImageURLs, [url], "Expected first image URL requests once first view becomes visible")
     }
 
+    func test_peopleLanguageImageView_cancelsImageLoadingWhenNotVisibleAnymore() {
+        let people = People(name: "people", gender: "male", skinColor: "blue", species: [Species(name: "species", language: "portuguese")], vehicles: [Vehicle(name: "vehicle")], films: [])
+        let (sut, loader) = makeSUT()
+
+        let url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=\(people.species[0].language)")!
+
+        sut.loadViewIfNeeded()
+        loader.completePeopleLoading(with: [people])
+        XCTAssertEqual(loader.cancelledImageURLs, [], "Expected no cancelled image URL requests until image is not visible")
+
+        sut.simulatePeopleLanguageImageViewNotVisible(at: 0)
+        XCTAssertEqual(loader.cancelledImageURLs, [url], "Expected on cancelled image URL request once first image is not visible anymore")
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: SwappViewController, loader: LoaderSpy) {
