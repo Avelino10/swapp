@@ -18,6 +18,9 @@
 		FD05B54A270C4D1A00C75E9F /* Swapp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FDB91FF02705C74700A0BB82 /* Swapp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FD05B54F270C4D8300C75E9F /* SwappViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B54E270C4D8300C75E9F /* SwappViewController.swift */; };
 		FD05B551270C4EDB00C75E9F /* PeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B550270C4EDB00C75E9F /* PeopleCell.swift */; };
+		FD05B557270C541A00C75E9F /* PeopleCell+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B556270C541A00C75E9F /* PeopleCell+TestHelpers.swift */; };
+		FD05B559270C545900C75E9F /* SwappViewController+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B558270C545900C75E9F /* SwappViewController+TestHelpers.swift */; };
+		FD05B55B270C549A00C75E9F /* SwappViewControllerTests+LoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B55A270C549A00C75E9F /* SwappViewControllerTests+LoaderSpy.swift */; };
 		FDB91FF92705C74700A0BB82 /* Swapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB91FF02705C74700A0BB82 /* Swapp.framework */; };
 		FDB920092705C82B00A0BB82 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920082705C82B00A0BB82 /* People.swift */; };
 		FDB9200B2705C94100A0BB82 /* Film.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB9200A2705C94100A0BB82 /* Film.swift */; };
@@ -78,6 +81,9 @@
 		FD05B53F270C4A5400C75E9F /* SwappViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwappViewControllerTests.swift; sourceTree = "<group>"; };
 		FD05B54E270C4D8300C75E9F /* SwappViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwappViewController.swift; sourceTree = "<group>"; };
 		FD05B550270C4EDB00C75E9F /* PeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleCell.swift; sourceTree = "<group>"; };
+		FD05B556270C541A00C75E9F /* PeopleCell+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PeopleCell+TestHelpers.swift"; sourceTree = "<group>"; };
+		FD05B558270C545900C75E9F /* SwappViewController+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwappViewController+TestHelpers.swift"; sourceTree = "<group>"; };
+		FD05B55A270C549A00C75E9F /* SwappViewControllerTests+LoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwappViewControllerTests+LoaderSpy.swift"; sourceTree = "<group>"; };
 		FDB91FF02705C74700A0BB82 /* Swapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Swapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDB91FF82705C74700A0BB82 /* SwappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDB920082705C82B00A0BB82 /* People.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
@@ -139,8 +145,8 @@
 		FD05B52B270C497C00C75E9F /* SwappiOS */ = {
 			isa = PBXGroup;
 			children = (
-				FD05B54E270C4D8300C75E9F /* SwappViewController.swift */,
-				FD05B550270C4EDB00C75E9F /* PeopleCell.swift */,
+				FD05B552270C537500C75E9F /* Controllers */,
+				FD05B553270C537D00C75E9F /* Views */,
 			);
 			path = SwappiOS;
 			sourceTree = "<group>";
@@ -148,7 +154,7 @@
 		FD05B535270C497C00C75E9F /* SwappiOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				FD05B53F270C4A5400C75E9F /* SwappViewControllerTests.swift */,
+				FD05B555270C539200C75E9F /* Controllers */,
 			);
 			path = SwappiOSTests;
 			sourceTree = "<group>";
@@ -158,6 +164,41 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FD05B552270C537500C75E9F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FD05B54E270C4D8300C75E9F /* SwappViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		FD05B553270C537D00C75E9F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FD05B550270C4EDB00C75E9F /* PeopleCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FD05B554270C538900C75E9F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FD05B556270C541A00C75E9F /* PeopleCell+TestHelpers.swift */,
+				FD05B558270C545900C75E9F /* SwappViewController+TestHelpers.swift */,
+				FD05B55A270C549A00C75E9F /* SwappViewControllerTests+LoaderSpy.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		FD05B555270C539200C75E9F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FD05B554270C538900C75E9F /* Helpers */,
+				FD05B53F270C4A5400C75E9F /* SwappViewControllerTests.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		FDB91FE62705C74700A0BB82 = {
@@ -419,7 +460,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD05B559270C545900C75E9F /* SwappViewController+TestHelpers.swift in Sources */,
+				FD05B55B270C549A00C75E9F /* SwappViewControllerTests+LoaderSpy.swift in Sources */,
 				FD05B541270C4B1000C75E9F /* SwappViewControllerTests.swift in Sources */,
+				FD05B557270C541A00C75E9F /* PeopleCell+TestHelpers.swift in Sources */,
 				FD05B542270C4BA900C75E9F /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
