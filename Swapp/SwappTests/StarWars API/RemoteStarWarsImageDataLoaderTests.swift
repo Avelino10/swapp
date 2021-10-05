@@ -8,33 +8,6 @@
 import Swapp
 import XCTest
 
-class RemoteStarWarsImageDataLoader {
-    let client: HTTPClient
-    init(client: HTTPClient) {
-        self.client = client
-    }
-
-    public enum Error: Swift.Error {
-        case invalidData
-    }
-
-    func loadImageData(from url: URL, completion: @escaping (StarWarsImageDataLoader.Result) -> Void) {
-        client.get(from: url) { [weak self] result in
-            guard self != nil else { return }
-            switch result {
-                case let .success((data, response)):
-                    if response.statusCode == 200, !data.isEmpty {
-                        completion(.success(data))
-                    } else {
-                        completion(.failure(Error.invalidData))
-                    }
-                case let .failure(error):
-                    completion(.failure(error))
-            }
-        }
-    }
-}
-
 class RemoteStarWarsImageDataLoaderTests: XCTestCase {
     func test_init_doesNotPerformAnyURLRequest() {
         let (_, client) = makeSUT()
@@ -46,7 +19,7 @@ class RemoteStarWarsImageDataLoaderTests: XCTestCase {
         let url = URL(string: "https://a-given-url.com")!
         let (sut, client) = makeSUT()
 
-        sut.loadImageData(from: url) { _ in }
+        _ = sut.loadImageData(from: url) { _ in }
 
         XCTAssertEqual(client.requestedURLs, [url])
     }
@@ -55,17 +28,17 @@ class RemoteStarWarsImageDataLoaderTests: XCTestCase {
         let url = URL(string: "https://a-given-url.com")!
         let (sut, client) = makeSUT()
 
-        sut.loadImageData(from: url) { _ in }
-        sut.loadImageData(from: url) { _ in }
+        _ = sut.loadImageData(from: url) { _ in }
+        _ = sut.loadImageData(from: url) { _ in }
 
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
 
-    func test_loadImageDataFromURL_deliversErrorOnClientError() {
+    func test_loadImageDataFromURL_deliversConnectivityErrorOnClientError() {
         let (sut, client) = makeSUT()
         let clientError = NSError(domain: "a client error", code: 0)
 
-        expect(sut, toCompleteWith: .failure(clientError), when: {
+        expect(sut, toCompleteWith: failure(.connectivity), when: {
             client.complete(with: clientError)
         })
     }
@@ -104,12 +77,40 @@ class RemoteStarWarsImageDataLoaderTests: XCTestCase {
         var sut: RemoteStarWarsImageDataLoader? = RemoteStarWarsImageDataLoader(client: client)
 
         var capturedResults = [StarWarsImageDataLoader.Result]()
-        sut?.loadImageData(from: URL(string: "http://a-url.com")!) { capturedResults.append($0) }
+        _ = sut?.loadImageData(from: URL(string: "http://a-url.com")!) { capturedResults.append($0) }
 
         sut = nil
         client.complete(withStatusCode: 200, data: anyData())
 
         XCTAssertTrue(capturedResults.isEmpty)
+    }
+
+    func test_cancelLoadImageDataFromURL_cancelsClientURLRequest() {
+        let (sut, client) = makeSUT()
+        let url = URL(string: "https://a-given-url.com")!
+
+        let task = sut.loadImageData(from: url) { _ in }
+
+        XCTAssertTrue(client.cancelledURLs.isEmpty, "Expected no cancelled URL request until task is cancelled")
+
+        task.cancel()
+
+        XCTAssertEqual(client.cancelledURLs, [url], "Expected cancelled URL request after task is cancelled")
+    }
+
+    func test_loadImageDataFromURL_doesNotDeliverResultAferCancellingTask() {
+        let (sut, client) = makeSUT()
+        let nonEmptyData = anyData()
+
+        var capturedResults = [StarWarsImageDataLoader.Result]()
+        let task = sut.loadImageData(from: URL(string: "http://a-url.com")!) { capturedResults.append($0) }
+        task.cancel()
+
+        client.complete(withStatusCode: 404, data: anyData())
+        client.complete(withStatusCode: 200, data: nonEmptyData)
+        client.complete(with: NSError(domain: "error", code: 0))
+
+        XCTAssertTrue(capturedResults.isEmpty, "Expected no received results after cancelling task")
     }
 
     // MARK: - Helpers
@@ -135,7 +136,7 @@ class RemoteStarWarsImageDataLoaderTests: XCTestCase {
         let url = URL(string: "https://a-given-url.com")!
         let exp = expectation(description: "Wait for load completion")
 
-        sut.loadImageData(from: url) { receivedResult in
+        _ = sut.loadImageData(from: url) { receivedResult in
             switch (receivedResult, expectedResult) {
                 case let (.success(receivedData), .success(expectedData)):
                     XCTAssertEqual(receivedData, expectedData, file: file, line: line)

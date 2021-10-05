@@ -29,7 +29,7 @@ public class RemoteStarWarsLoader: StarWarsLoader {
             guard self != nil else { return }
             switch result {
                 case let .success((data, response)):
-                    if response.statusCode == 200, let root = try? JSONDecoder().decode(Root.self, from: data) {
+                    if response.isOK, let root = try? JSONDecoder().decode(Root.self, from: data) {
                         let dispatchGroup = DispatchGroup()
                         var peopleList = [People]()
 
@@ -53,7 +53,6 @@ public class RemoteStarWarsLoader: StarWarsLoader {
                                             peopleList.append(people)
                                             dispatchGroup.leave()
                                         }
-
                                     }
                                 } else {
                                     peopleList.append(peopleApi.people)
@@ -91,7 +90,7 @@ extension RemoteStarWarsLoader {
                 guard self != nil else { return }
                 switch result {
                     case let .success((data, response)):
-                        if response.statusCode == 200, let speciesAPI = try? JSONDecoder().decode(SpeciesAPI.self, from: data) {
+                        if response.isOK, let speciesAPI = try? JSONDecoder().decode(SpeciesAPI.self, from: data) {
                             species.append(speciesAPI.species)
                         }
                     case .failure:
@@ -125,7 +124,7 @@ extension RemoteStarWarsLoader {
                 guard self != nil else { return }
                 switch result {
                     case let .success((data, response)):
-                        if response.statusCode == 200, let vehiclesAPI = try? JSONDecoder().decode(VehiclesAPI.self, from: data) {
+                        if response.isOK, let vehiclesAPI = try? JSONDecoder().decode(VehiclesAPI.self, from: data) {
                             vehicles.append(vehiclesAPI.vehicle)
                         }
                     case .failure:
@@ -159,7 +158,7 @@ extension RemoteStarWarsLoader {
                 guard self != nil else { return }
                 switch result {
                     case let .success((data, response)):
-                        if response.statusCode == 200, let filmsAPI = try? JSONDecoder().decode(FilmsAPI.self, from: data) {
+                        if response.isOK, let filmsAPI = try? JSONDecoder().decode(FilmsAPI.self, from: data) {
                             films.append(filmsAPI.film)
                         }
                     case .failure:
