@@ -17,11 +17,24 @@ final class PeopleCellController {
     }
 
     func view(in tableView: UITableView) -> UITableViewCell {
-        self.cell = tableView.dequeueReusableCell()
+        cell = tableView.dequeueReusableCell()
         cell?.name.text = model.name
-        cell?.language.text = model.species[0].language
-        cell?.vehicles.text = model.vehicles[0].name
+        cell?.language.text = model.species.isEmpty ? "no species" : model.species[0].language
+        cell?.vehicles.text = model.vehicles.isEmpty ? "no vehicles" : getVehicleNames(from: model.vehicles)
 
         return cell!
+    }
+
+    private func getVehicleNames(from vehicles: [Vehicle]) -> String {
+        var vehicleNames = ""
+
+        for (index, vehicle) in vehicles.enumerated() {
+            vehicleNames += vehicle.name
+            if index < vehicles.count - 1 {
+                vehicleNames += ", "
+            }
+        }
+
+        return vehicleNames
     }
 }

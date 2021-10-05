@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol StarWarsLoader {
-    typealias Result = Swift.Result<People, Error>
+    typealias Result = Swift.Result<[People], Error>
 
     func load(completion: @escaping (Result) -> Void)
 }

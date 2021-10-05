@@ -32,7 +32,7 @@ final class SwappViewControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         assertThat(sut, isRendering: [])
 
-        loader.completePeopleLoading(with: people)
+        loader.completePeopleLoading(with: [people])
         assertThat(sut, isRendering: [people])
     }
 

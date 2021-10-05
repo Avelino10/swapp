@@ -17,6 +17,7 @@ public class RemoteStarWarsLoader: StarWarsLoader {
     }
 
     public typealias Result = StarWarsLoader.Result
+    private typealias InternalResult = Swift.Result<People, Error>
 
     public init(url: URL, client: HTTPClient) {
         self.client = client
@@ -28,19 +29,41 @@ public class RemoteStarWarsLoader: StarWarsLoader {
             guard self != nil else { return }
             switch result {
                 case let .success((data, response)):
-                    if response.statusCode == 200, let peopleApi = try? JSONDecoder().decode(PeopleAPI.self, from: data) {
-                        self?.getSpecies(peopleApi.species, people: peopleApi.people) { speciesResult in
-                            if let people = try? speciesResult.get() {
-                                self?.getVehicles(peopleApi.vehicles, people: people) { vehiclesResult in
-                                    if let newPeople = try? vehiclesResult.get() {
-                                        self?.getFilms(peopleApi.films, people: newPeople, completion: completion)
-                                    } else {
-                                        completion(.success(people))
+                    if response.statusCode == 200, let root = try? JSONDecoder().decode(Root.self, from: data) {
+                        let dispatchGroup = DispatchGroup()
+                        var peopleList = [People]()
+
+                        for peopleApi in root.results {
+                            dispatchGroup.enter()
+
+                            self?.getSpecies(peopleApi.species, people: peopleApi.people) { speciesResult in
+                                if let people = try? speciesResult.get() {
+                                    self?.getVehicles(peopleApi.vehicles, people: people) { vehiclesResult in
+                                        if let newPeople = try? vehiclesResult.get() {
+                                            self?.getFilms(peopleApi.films, people: newPeople) { filmsResult in
+                                                if let finalPeople = try? filmsResult.get() {
+                                                    peopleList.append(finalPeople)
+                                                } else {
+                                                    peopleList.append(newPeople)
+                                                }
+
+                                                dispatchGroup.leave()
+                                            }
+                                        } else {
+                                            peopleList.append(people)
+                                            dispatchGroup.leave()
+                                        }
+
                                     }
+                                } else {
+                                    peopleList.append(peopleApi.people)
+                                    dispatchGroup.leave()
                                 }
-                            } else {
-                                completion(.success(peopleApi.people))
                             }
+                        }
+
+                        dispatchGroup.notify(queue: .main) {
+                            completion(.success(peopleList))
                         }
                     } else {
                         completion(.failure(Error.invalidData))
@@ -53,7 +76,7 @@ public class RemoteStarWarsLoader: StarWarsLoader {
 }
 
 extension RemoteStarWarsLoader {
-    private func getSpecies(_ url: [URL], people: People, completion: @escaping (Result) -> Void) {
+    private func getSpecies(_ url: [URL], people: People, completion: @escaping (InternalResult) -> Void) {
         guard !url.isEmpty else {
             completion(.success(people))
             return
@@ -87,7 +110,7 @@ extension RemoteStarWarsLoader {
 }
 
 extension RemoteStarWarsLoader {
-    private func getVehicles(_ url: [URL], people: People, completion: @escaping (Result) -> Void) {
+    private func getVehicles(_ url: [URL], people: People, completion: @escaping (InternalResult) -> Void) {
         guard !url.isEmpty else {
             completion(.success(people))
             return
@@ -121,7 +144,7 @@ extension RemoteStarWarsLoader {
 }
 
 extension RemoteStarWarsLoader {
-    private func getFilms(_ url: [URL], people: People, completion: @escaping (Result) -> Void) {
+    private func getFilms(_ url: [URL], people: People, completion: @escaping (InternalResult) -> Void) {
         guard !url.isEmpty else {
             completion(.success(people))
             return
@@ -152,6 +175,11 @@ extension RemoteStarWarsLoader {
             completion(.success(people))
         }
     }
+}
+
+private struct Root: Decodable {
+    let next: URL
+    let results: [PeopleAPI]
 }
 
 private struct PeopleAPI: Decodable {

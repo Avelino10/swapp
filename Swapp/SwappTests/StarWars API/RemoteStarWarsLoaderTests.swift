@@ -81,9 +81,14 @@ class RemoteStarWarsLoaderTests: XCTestCase {
             "films": people.films,
         ] as [String: Any]
 
-        expect(sut, toCompleteWith: .success(people), when: {
-            let peopleJson = try! JSONSerialization.data(withJSONObject: peopleDict)
-            client.complete(withStatusCode: 200, data: peopleJson, at: 0)
+        let rootDict = [
+            "next": "http://any-url.com",
+            "results": [peopleDict]
+        ] as [String: Any]
+
+        expect(sut, toCompleteWith: .success([people]), when: {
+            let rootJson = try! JSONSerialization.data(withJSONObject: rootDict)
+            client.complete(withStatusCode: 200, data: rootJson, at: 0)
             let clientError = NSError(domain: "an error", code: 0)
             client.complete(with: clientError, at: 1)
             client.complete(with: clientError, at: 2)
@@ -112,9 +117,14 @@ class RemoteStarWarsLoaderTests: XCTestCase {
             "language": species.language,
         ] as [String: Any]
 
-        expect(sut, toCompleteWith: .success(people), when: {
-            let peopleJson = try! JSONSerialization.data(withJSONObject: peopleDict)
-            client.complete(withStatusCode: 200, data: peopleJson, at: 0)
+        let rootDict = [
+            "next": "http://any-url.com",
+            "results": [peopleDict]
+        ] as [String: Any]
+
+        expect(sut, toCompleteWith: .success([people]), when: {
+            let rootJson = try! JSONSerialization.data(withJSONObject: rootDict)
+            client.complete(withStatusCode: 200, data: rootJson, at: 0)
             let speciesJson = try! JSONSerialization.data(withJSONObject: speciesDict)
             client.complete(withStatusCode: 200, data: speciesJson, at: 1)
             let clientError = NSError(domain: "an error", code: 0)
@@ -142,12 +152,15 @@ class RemoteStarWarsLoaderTests: XCTestCase {
             "language": species.language,
         ] as [String: Any]
 
+        let rootDict = [
+            "next": "http://any-url.com",
+            "results": [peopleDict]
+        ] as [String: Any]
 
-
-        expect(sut, toCompleteWith: .success(people), when: {
-            let peopleJson = try! JSONSerialization.data(withJSONObject: peopleDict)
+        expect(sut, toCompleteWith: .success([people]), when: {
+            let rootJson = try! JSONSerialization.data(withJSONObject: rootDict)
             let speciesJson = try! JSONSerialization.data(withJSONObject: speciesDict)
-            client.complete(withStatusCode: 200, data: peopleJson, at: 0)
+            client.complete(withStatusCode: 200, data: rootJson, at: 0)
             client.complete(withStatusCode: 200, data: speciesJson, at: 1)
         })
     }
@@ -171,10 +184,15 @@ class RemoteStarWarsLoaderTests: XCTestCase {
             "name": vehicle.name,
         ] as [String: Any]
 
-        expect(sut, toCompleteWith: .success(people), when: {
-            let peopleJson = try! JSONSerialization.data(withJSONObject: peopleDict)
+        let rootDict = [
+            "next": "http://any-url.com",
+            "results": [peopleDict]
+        ] as [String: Any]
+
+        expect(sut, toCompleteWith: .success([people]), when: {
+            let rootJson = try! JSONSerialization.data(withJSONObject: rootDict)
             let vehicleJson = try! JSONSerialization.data(withJSONObject: vehicleDict)
-            client.complete(withStatusCode: 200, data: peopleJson, at: 0)
+            client.complete(withStatusCode: 200, data: rootJson, at: 0)
             client.complete(withStatusCode: 200, data: vehicleJson, at: 1)
         })
     }
@@ -198,10 +216,15 @@ class RemoteStarWarsLoaderTests: XCTestCase {
             "title": film.title,
         ] as [String: Any]
 
-        expect(sut, toCompleteWith: .success(people), when: {
-            let peopleJson = try! JSONSerialization.data(withJSONObject: peopleDict)
+        let rootDict = [
+            "next": "http://any-url.com",
+            "results": [peopleDict]
+        ] as [String: Any]
+
+        expect(sut, toCompleteWith: .success([people]), when: {
+            let rootJson = try! JSONSerialization.data(withJSONObject: rootDict)
             let filmJson = try! JSONSerialization.data(withJSONObject: filmDict)
-            client.complete(withStatusCode: 200, data: peopleJson, at: 0)
+            client.complete(withStatusCode: 200, data: rootJson, at: 0)
             client.complete(withStatusCode: 200, data: filmJson, at: 1)
         })
     }
