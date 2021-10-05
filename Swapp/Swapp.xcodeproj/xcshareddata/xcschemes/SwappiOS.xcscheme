@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FDB91FEF2705C74700A0BB82"
-               BuildableName = "Swapp.framework"
-               BlueprintName = "Swapp"
+               BlueprintIdentifier = "FD05B529270C497C00C75E9F"
+               BuildableName = "SwappiOS.framework"
+               BlueprintName = "SwappiOS"
                ReferencedContainer = "container:Swapp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FDB91FEF2705C74700A0BB82"
-            BuildableName = "Swapp.framework"
-            BlueprintName = "Swapp"
+            BlueprintIdentifier = "FD05B529270C497C00C75E9F"
+            BuildableName = "SwappiOS.framework"
+            BlueprintName = "SwappiOS"
             ReferencedContainer = "container:Swapp.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
@@ -44,9 +44,9 @@
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FDB91FF72705C74700A0BB82"
-               BuildableName = "SwappTests.xctest"
-               BlueprintName = "SwappTests"
+               BlueprintIdentifier = "FD05B530270C497C00C75E9F"
+               BuildableName = "SwappiOSTests.xctest"
+               BlueprintName = "SwappiOSTests"
                ReferencedContainer = "container:Swapp.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -72,9 +72,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FDB91FEF2705C74700A0BB82"
-            BuildableName = "Swapp.framework"
-            BlueprintName = "Swapp"
+            BlueprintIdentifier = "FD05B529270C497C00C75E9F"
+            BuildableName = "SwappiOS.framework"
+            BlueprintName = "SwappiOS"
             ReferencedContainer = "container:Swapp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
