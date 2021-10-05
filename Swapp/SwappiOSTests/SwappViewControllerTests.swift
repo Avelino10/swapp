@@ -25,6 +25,17 @@ final class SwappViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadCallCount, 1)
     }
 
+    func test_loadPeopleCompletion_rendersSuccessfullyLoadedItems() {
+        let people = People(name: "people", gender: "male", skinColor: "blue", species: [Species(name: "species", language: "portuguese")], vehicles: [Vehicle(name: "vehicle")], films: [])
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        assertThat(sut, isRendering: [])
+
+        loader.completePeopleLoading(with: people)
+        assertThat(sut, isRendering: [people])
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: SwappViewController, loader: LoaderSpy) {
@@ -37,11 +48,74 @@ final class SwappViewControllerTests: XCTestCase {
         return (sut, loader)
     }
 
+    private func assertThat(_ sut: SwappViewController, isRendering people: [People], file: StaticString = #filePath, line: UInt = #line) {
+        guard sut.numberOfRenderedPeopleCells() == people.count else {
+            return XCTFail("Expected \(people.count) people, got \(sut.numberOfRenderedPeopleCells()) instead.", file: file, line: line)
+        }
+
+        people.enumerated().forEach { index, image in
+            assertThat(sut, hasViewConfiguredFor: image, at: index, file: file, line: line)
+        }
+    }
+
+    private func assertThat(_ sut: SwappViewController, hasViewConfiguredFor people: People, at index: Int, file: StaticString = #filePath, line: UInt = #line) {
+        let view = sut.peopleCell(at: index)
+
+        guard let cell = view as? PeopleCell else {
+            return XCTFail("Expected \(PeopleCell.self) instance, got \(String(describing: view)) instead", file: file, line: line)
+        }
+
+        XCTAssertEqual(cell.nameText, people.name, "Expected name text to be \(String(describing: people.name)) for people view at index (\(index))", file: file, line: line)
+
+        XCTAssertEqual(cell.languageText, people.species[0].language, "Expected language text to be \(String(describing: people.species[0].language)) for people view at index (\(index))", file: file, line: line)
+
+        XCTAssertEqual(cell.vehicleText, people.vehicles[0].name, "Expected vehicle text to be \(String(describing: people.vehicles[0].name)) for people view at index (\(index))", file: file, line: line)
+    }
+
     class LoaderSpy: StarWarsLoader {
-        private(set) var loadCallCount: Int = 0
+        private var peopleCompletions = [(StarWarsLoader.Result) -> Void]()
+
+        var loadCallCount: Int {
+            peopleCompletions.count
+        }
 
         func load(completion: @escaping (StarWarsLoader.Result) -> Void) {
-            loadCallCount += 1
+            peopleCompletions.append(completion)
         }
+
+        func completePeopleLoading(with people: People, at index: Int = 0) {
+            peopleCompletions[index](.success(people))
+        }
+    }
+}
+
+private extension SwappViewController {
+    func numberOfRenderedPeopleCells() -> Int {
+        tableView.numberOfRows(inSection: peopleSection)
+    }
+
+    func peopleCell(at row: Int) -> UITableViewCell? {
+        let ds = tableView.dataSource
+        let index = IndexPath(row: row, section: peopleSection)
+
+        return ds?.tableView(tableView, cellForRowAt: index)
+    }
+
+    private var peopleSection: Int {
+        0
+    }
+}
+
+private extension PeopleCell {
+    var nameText: String? {
+        name.text
+    }
+
+    var languageText: String? {
+        language.text
+    }
+
+    var vehicleText: String? {
+        vehicles.text
     }
 }
