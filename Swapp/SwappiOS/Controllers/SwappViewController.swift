@@ -43,12 +43,12 @@ public final class SwappViewController: UITableViewController, UITableViewDataSo
 
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
-            let cellModel = tableModel[indexPath.row]
-
-            let language = cellModel.species[0].language
-            let url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=\(language.getAcronyms())")!
-            _ = imageDataLoader?.loadImageData(from: url) { _ in }
+            cellController(forRowAt: indexPath).preload()
         }
+    }
+
+    public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        indexPaths.forEach(cancelTask)
     }
 
     override public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -61,5 +61,9 @@ public final class SwappViewController: UITableViewController, UITableViewDataSo
         cellControllers[indexPath] = cellController
 
         return cellController
+    }
+
+    private func cancelTask(forRowAt indexPath: IndexPath) {
+        cellController(forRowAt: indexPath).cancelLoad()
     }
 }

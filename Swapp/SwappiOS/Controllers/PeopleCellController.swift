@@ -25,7 +25,6 @@ final class PeopleCellController {
 
         if !model.species.isEmpty {
             let language = model.species[0].language
-
             let url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=\(language.getAcronyms())")!
             task = imageLoader.loadImageData(from: url) { [weak cell] result in
                 let data = try? result.get()
@@ -47,6 +46,16 @@ final class PeopleCellController {
         cell?.vehicles.text = model.vehicles.isEmpty ? "no vehicles" : getVehicleNames(from: model.vehicles)
 
         return cell!
+    }
+
+    public func preload() {
+        let language = model.species[0].language
+        let url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=\(language.getAcronyms())")!
+        task = imageLoader.loadImageData(from: url) { _ in }
+    }
+
+    public func cancelLoad() {
+        task?.cancel()
     }
 
     private func getVehicleNames(from vehicles: [Vehicle]) -> String {

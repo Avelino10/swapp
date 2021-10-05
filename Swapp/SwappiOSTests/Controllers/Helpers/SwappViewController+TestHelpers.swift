@@ -42,4 +42,12 @@ extension SwappViewController {
         let index = IndexPath(row: row, section: peopleSection)
         ds?.tableView(tableView, prefetchRowsAt: [index])
     }
+
+    func simulatePeopleImageViewNotNearVisible(at row: Int) {
+        simulatePeopleImageViewNearVisible(at: row)
+
+        let ds = tableView.prefetchDataSource
+        let index = IndexPath(row: row, section: peopleSection)
+        ds?.tableView?(tableView, cancelPrefetchingForRowsAt: [index])
+    }
 }
