@@ -64,6 +64,21 @@ final class SwappViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.cancelledImageURLs, [url], "Expected on cancelled image URL request once first image is not visible anymore")
     }
 
+    func test_peopleLanguageImageView_rendersImageLoadedFromURL() {
+        let people = People(name: "people", gender: "male", skinColor: "blue", species: [Species(name: "species", language: "portuguese")], vehicles: [Vehicle(name: "vehicle")], films: [])
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completePeopleLoading(with: [people])
+
+        let view0 = sut.simulatePeopleLanguageImageViewVisible(at: 0)
+        XCTAssertEqual(view0?.renderedImage, .none, "Expected no image for first view while loading first image")
+
+        let imageData0 = UIImage.make(withColor: .red).pngData()!
+        loader.completeImageLoading(with: imageData0, at: 0)
+        XCTAssertEqual(view0?.renderedImage, imageData0, "Expected image for first view once first image loading completes successfully")
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: SwappViewController, loader: LoaderSpy) {
@@ -94,8 +109,6 @@ final class SwappViewControllerTests: XCTestCase {
         }
 
         XCTAssertEqual(cell.nameText, people.name, "Expected name text to be \(String(describing: people.name)) for people view at index (\(index))", file: file, line: line)
-
-        XCTAssertEqual(cell.languageText, people.species[0].language, "Expected language text to be \(String(describing: people.species[0].language)) for people view at index (\(index))", file: file, line: line)
 
         XCTAssertEqual(cell.vehicleText, people.vehicles[0].name, "Expected vehicle text to be \(String(describing: people.vehicles[0].name)) for people view at index (\(index))", file: file, line: line)
     }

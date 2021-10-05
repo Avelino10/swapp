@@ -13,11 +13,11 @@ extension PeopleCell {
         name.text
     }
 
-    var languageText: String? {
-        language.text
-    }
-
     var vehicleText: String? {
         vehicles.text
+    }
+
+    var renderedImage: Data? {
+        languageImage.image?.pngData()
     }
 }

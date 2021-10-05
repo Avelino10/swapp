@@ -12,5 +12,6 @@ public protocol StarWarsImageDataLoaderTask {
 }
 
 public protocol StarWarsImageDataLoader {
-    func loadImageData(with queryParam: String) -> StarWarsImageDataLoaderTask
+    typealias Result = Swift.Result<Data, Error>
+    func loadImageData(with queryParam: String, completion: @escaping (Result) -> Void) -> StarWarsImageDataLoaderTask
 }

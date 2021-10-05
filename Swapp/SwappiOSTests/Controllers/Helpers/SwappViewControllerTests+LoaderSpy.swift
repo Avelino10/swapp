@@ -36,14 +36,23 @@ extension SwappViewControllerTests {
             }
         }
 
-        private(set) var loadedImageURLs = [URL]()
+        private var imageRequests = [(url: URL, completion: (StarWarsImageDataLoader.Result) -> Void)]()
+
+        var loadedImageURLs: [URL] {
+            imageRequests.map { $0.url }
+        }
+
         private(set) var cancelledImageURLs = [URL]()
 
-        func loadImageData(with queryParam: String) -> StarWarsImageDataLoaderTask {
+        func loadImageData(with queryParam: String, completion: @escaping (StarWarsImageDataLoader.Result) -> Void) -> StarWarsImageDataLoaderTask {
             let url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=\(queryParam)")!
-            loadedImageURLs.append(url)
+            imageRequests.append((url, completion))
 
             return TaskSpy { [weak self] in self?.cancelledImageURLs.append(url) }
+        }
+
+        func completeImageLoading(with imageData: Data = Data(), at index: Int = 0) {
+            imageRequests[index].completion(.success(imageData))
         }
     }
 }

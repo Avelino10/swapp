@@ -24,11 +24,15 @@ final class PeopleCellController {
         cell?.name.text = model.name
 
         if !model.species.isEmpty {
-            cell?.language.text = model.species[0].language
+            task = imageLoader.loadImageData(with: model.species[0].language) { [weak cell] result in
+                let data = try? result.get()
 
-            task = imageLoader.loadImageData(with: model.species[0].language)
+                if let image = data.map(UIImage.init) {
+                    cell?.languageImage.image = image
+                }
+            }
         } else {
-            cell?.language.text = "no species"
+            cell?.languageImage.image = nil
         }
 
         cell?.vehicles.text = model.vehicles.isEmpty ? "no vehicles" : getVehicleNames(from: model.vehicles)
@@ -50,6 +54,7 @@ final class PeopleCellController {
     }
 
     deinit {
+        cell = nil
         task?.cancel()
     }
 }

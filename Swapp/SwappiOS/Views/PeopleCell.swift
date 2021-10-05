@@ -9,6 +9,6 @@ import UIKit
 
 public final class PeopleCell: UITableViewCell {
     @IBOutlet public var name: UILabel!
-    @IBOutlet public var language: UILabel!
+    @IBOutlet public var languageImage: UIImageView!
     @IBOutlet public var vehicles: UILabel!
 }
