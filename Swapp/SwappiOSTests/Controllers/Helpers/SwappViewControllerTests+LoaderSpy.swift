@@ -10,7 +10,10 @@ import Swapp
 import SwappiOS
 
 extension SwappViewControllerTests {
-    class LoaderSpy: StarWarsLoader {
+    class LoaderSpy: StarWarsLoader, StarWarsImageDataLoader {
+
+        // MARK: - StarWarsLoader
+
         private var peopleCompletions = [(StarWarsLoader.Result) -> Void]()
 
         var loadCallCount: Int {
@@ -23,6 +26,15 @@ extension SwappViewControllerTests {
 
         func completePeopleLoading(with people: [People] = [], at index: Int = 0) {
             peopleCompletions[index](.success(people))
+        }
+
+        // MARK: - StarWarsImageDataLoader
+
+        private(set) var loadedImageURLs = [URL]()
+
+        func loadImageData(with queryParam: String) {
+            let url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=\(queryParam)")!
+            loadedImageURLs.append(url)
         }
     }
 }

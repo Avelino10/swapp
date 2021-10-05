@@ -23,4 +23,8 @@ extension SwappViewController {
     private var peopleSection: Int {
         0
     }
+
+    func simulatePeopleLanguageImageViewVisible(at index: Int) {
+        _ = peopleCell(at: index)
+    }
 }

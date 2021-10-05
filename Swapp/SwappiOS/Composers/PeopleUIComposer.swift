@@ -11,12 +11,13 @@ import UIKit
 public final class PeopleUIComposer {
     private init() {}
 
-    public static func launchComposedWith(loader: StarWarsLoader) -> SwappViewController {
+    public static func launchComposedWith(loader: StarWarsLoader, imageDataLoader: StarWarsImageDataLoader) -> SwappViewController {
         let bundle = Bundle(for: SwappViewController.self)
         let storyboard = UIStoryboard(name: "People", bundle: bundle)
         let swappController = storyboard.instantiateInitialViewController() as! SwappViewController
 
         swappController.loader = loader
+        swappController.imageDataLoader = imageDataLoader
 
         return swappController
     }

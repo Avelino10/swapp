@@ -36,11 +36,25 @@ final class SwappViewControllerTests: XCTestCase {
         assertThat(sut, isRendering: [people])
     }
 
+    func test_peopleLanguageImageView_loadsImageURLWhenVisible() {
+        let people = People(name: "people", gender: "male", skinColor: "blue", species: [Species(name: "species", language: "portuguese")], vehicles: [Vehicle(name: "vehicle")], films: [])
+        let (sut, loader) = makeSUT()
+
+        let url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=\(people.species[0].language)")!
+
+        sut.loadViewIfNeeded()
+        loader.completePeopleLoading(with: [people])
+        XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL requests until views become visible")
+
+        sut.simulatePeopleLanguageImageViewVisible(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [url], "Expected first image URL requests once first view becomes visible")
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: SwappViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let sut = PeopleUIComposer.launchComposedWith(loader: loader)
+        let sut = PeopleUIComposer.launchComposedWith(loader: loader, imageDataLoader: loader)
 
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)

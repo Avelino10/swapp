@@ -25,6 +25,8 @@
 		FD05B55F270C56E200C75E9F /* People.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD05B55E270C56E200C75E9F /* People.storyboard */; };
 		FD05B562270C5C1B00C75E9F /* PeopleUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B561270C5C1B00C75E9F /* PeopleUIComposer.swift */; };
 		FD05B564270C5D5E00C75E9F /* UITableViewCell+Dequeueing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B563270C5D5E00C75E9F /* UITableViewCell+Dequeueing.swift */; };
+		FD05B5AA270C8D1500C75E9F /* StarWarsImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B5A9270C8D1500C75E9F /* StarWarsImageDataLoader.swift */; };
+		FD05B5AC270C8F9700C75E9F /* RemoteStarWarsImageDataLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B5AB270C8F9700C75E9F /* RemoteStarWarsImageDataLoaderTests.swift */; };
 		FDB91FF92705C74700A0BB82 /* Swapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB91FF02705C74700A0BB82 /* Swapp.framework */; };
 		FDB920092705C82B00A0BB82 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920082705C82B00A0BB82 /* People.swift */; };
 		FDB9200B2705C94100A0BB82 /* Film.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB9200A2705C94100A0BB82 /* Film.swift */; };
@@ -289,6 +291,7 @@
 				FDB9200C2705C99300A0BB82 /* Vehicle.swift */,
 				FDB9200E2705C9CE00A0BB82 /* Species.swift */,
 				FDB920102705CA1800A0BB82 /* StarWarsLoader.swift */,
+				FD05B5A9270C8D1500C75E9F /* StarWarsImageDataLoader.swift */,
 			);
 			path = "StarWars Feature";
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				FDB9200F2705C9CE00A0BB82 /* Species.swift in Sources */,
 				FDB9200D2705C99300A0BB82 /* Vehicle.swift in Sources */,
 				FDB920092705C82B00A0BB82 /* People.swift in Sources */,
+				FD05B5AA270C8D1500C75E9F /* StarWarsImageDataLoader.swift in Sources */,
 				FD05B5202708741A00C75E9F /* URLSessionHTTPClient.swift in Sources */,
 				FDB920182705D67E00A0BB82 /* HTTPClient.swift in Sources */,
 				FDB920162705CE5800A0BB82 /* RemoteStarWarsLoader.swift in Sources */,

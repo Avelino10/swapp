@@ -10,6 +10,7 @@ import UIKit
 
 public final class SwappViewController: UITableViewController {
     var loader: StarWarsLoader?
+    var imageDataLoader: StarWarsImageDataLoader?
     private var tableModel = [People]()
     private var cellControllers = [IndexPath: PeopleCellController]()
 
@@ -40,7 +41,7 @@ public final class SwappViewController: UITableViewController {
 
     private func cellController(forRowAt indexPath: IndexPath) -> PeopleCellController {
         let cellModel = tableModel[indexPath.row]
-        let cellController = PeopleCellController(model: cellModel)
+        let cellController = PeopleCellController(model: cellModel, imageDataLoader: imageDataLoader!)
         cellControllers[indexPath] = cellController
 
         return cellController

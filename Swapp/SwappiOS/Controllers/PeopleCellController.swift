@@ -11,15 +11,25 @@ import UIKit
 final class PeopleCellController {
     private let model: People
     private var cell: PeopleCell?
+    private let imageLoader: StarWarsImageDataLoader
 
-    init(model: People) {
+    init(model: People, imageDataLoader: StarWarsImageDataLoader) {
         self.model = model
+        imageLoader = imageDataLoader
     }
 
     func view(in tableView: UITableView) -> UITableViewCell {
         cell = tableView.dequeueReusableCell()
         cell?.name.text = model.name
-        cell?.language.text = model.species.isEmpty ? "no species" : model.species[0].language
+
+        if !model.species.isEmpty {
+            cell?.language.text = model.species[0].language
+
+            imageLoader.loadImageData(with: model.species[0].language)
+        } else {
+            cell?.language.text = "no species"
+        }
+
         cell?.vehicles.text = model.vehicles.isEmpty ? "no vehicles" : getVehicleNames(from: model.vehicles)
 
         return cell!
