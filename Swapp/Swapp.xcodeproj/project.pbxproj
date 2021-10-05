@@ -96,6 +96,7 @@
 		FD05B561270C5C1B00C75E9F /* PeopleUIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleUIComposer.swift; sourceTree = "<group>"; };
 		FD05B563270C5D5E00C75E9F /* UITableViewCell+Dequeueing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Dequeueing.swift"; sourceTree = "<group>"; };
 		FD05B5A9270C8D1500C75E9F /* StarWarsImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarWarsImageDataLoader.swift; sourceTree = "<group>"; };
+		FD05B5AB270C8F9700C75E9F /* RemoteStarWarsImageDataLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteStarWarsImageDataLoaderTests.swift; sourceTree = "<group>"; };
 		FD05B5AD270CDDB800C75E9F /* UIImage+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+TestHelpers.swift"; sourceTree = "<group>"; };
 		FDB91FF02705C74700A0BB82 /* Swapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Swapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDB91FF82705C74700A0BB82 /* SwappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -283,6 +284,7 @@
 				FD05B51C2708723000C75E9F /* Helpers */,
 				FDB920122705CB8700A0BB82 /* RemoteStarWarsLoaderTests.swift */,
 				FDB9201B2705D82400A0BB82 /* URLSessionHTTPClientTests.swift */,
+				FD05B5AB270C8F9700C75E9F /* RemoteStarWarsImageDataLoaderTests.swift */,
 			);
 			path = "StarWars API";
 			sourceTree = "<group>";
@@ -525,6 +527,7 @@
 				FDB9201C2705D82400A0BB82 /* URLSessionHTTPClientTests.swift in Sources */,
 				FD05B51E2708724200C75E9F /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				FD05B5242708762900C75E9F /* URLProtocolStub.swift in Sources */,
+				FD05B5AC270C8F9700C75E9F /* RemoteStarWarsImageDataLoaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

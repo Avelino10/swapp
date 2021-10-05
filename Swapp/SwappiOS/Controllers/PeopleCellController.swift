@@ -24,7 +24,8 @@ final class PeopleCellController {
         cell?.name.text = model.name
 
         if !model.species.isEmpty {
-            task = imageLoader.loadImageData(with: model.species[0].language) { [weak cell] result in
+            let url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=\(model.species[0].language)")!
+            task = imageLoader.loadImageData(from: url) { [weak cell] result in
                 let data = try? result.get()
 
                 if let image = data.map(UIImage.init) {
