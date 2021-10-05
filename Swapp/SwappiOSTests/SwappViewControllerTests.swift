@@ -7,22 +7,8 @@
 
 import Foundation
 import Swapp
+import SwappiOS
 import XCTest
-
-final class SwappViewController: UIViewController {
-    private var loader: StarWarsLoader?
-
-    convenience init(loader: StarWarsLoader) {
-        self.init()
-        self.loader = loader
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        loader?.load { _ in }
-    }
-}
 
 final class SwappViewControllerTests: XCTestCase {
     func test_init_doesNotLoadList() {

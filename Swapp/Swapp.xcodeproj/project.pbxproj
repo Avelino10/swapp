@@ -16,6 +16,7 @@
 		FD05B542270C4BA900C75E9F /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B51D2708724200C75E9F /* XCTestCase+MemoryLeakTracking.swift */; };
 		FD05B549270C4D1A00C75E9F /* Swapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB91FF02705C74700A0BB82 /* Swapp.framework */; };
 		FD05B54A270C4D1A00C75E9F /* Swapp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FDB91FF02705C74700A0BB82 /* Swapp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FD05B54F270C4D8300C75E9F /* SwappViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B54E270C4D8300C75E9F /* SwappViewController.swift */; };
 		FDB91FF92705C74700A0BB82 /* Swapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB91FF02705C74700A0BB82 /* Swapp.framework */; };
 		FDB920092705C82B00A0BB82 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920082705C82B00A0BB82 /* People.swift */; };
 		FDB9200B2705C94100A0BB82 /* Film.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB9200A2705C94100A0BB82 /* Film.swift */; };
@@ -74,6 +75,7 @@
 		FD05B52A270C497C00C75E9F /* SwappiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwappiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD05B531270C497C00C75E9F /* SwappiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwappiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD05B53F270C4A5400C75E9F /* SwappViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwappViewControllerTests.swift; sourceTree = "<group>"; };
+		FD05B54E270C4D8300C75E9F /* SwappViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwappViewController.swift; sourceTree = "<group>"; };
 		FDB91FF02705C74700A0BB82 /* Swapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Swapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDB91FF82705C74700A0BB82 /* SwappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDB920082705C82B00A0BB82 /* People.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 		FD05B52B270C497C00C75E9F /* SwappiOS */ = {
 			isa = PBXGroup;
 			children = (
+				FD05B54E270C4D8300C75E9F /* SwappViewController.swift */,
 			);
 			path = SwappiOS;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD05B54F270C4D8300C75E9F /* SwappViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +533,7 @@
 		FD05B53D270C497C00C75E9F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -551,6 +556,7 @@
 		FD05B53E270C497C00C75E9F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
