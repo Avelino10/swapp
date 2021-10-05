@@ -79,6 +79,26 @@ final class SwappViewControllerTests: XCTestCase {
         XCTAssertEqual(view0?.renderedImage, imageData0, "Expected image for first view once first image loading completes successfully")
     }
 
+    func test_peopleLanguageImageView_preloadsImageURLWhenNearVisible() {
+        let people0 = People(name: "people", gender: "male", skinColor: "blue", species: [Species(name: "species", language: "portuguese")], vehicles: [Vehicle(name: "vehicle")], films: [])
+        let people1 = People(name: "people", gender: "male", skinColor: "blue", species: [Species(name: "species", language: "portuguese test")], vehicles: [Vehicle(name: "vehicle")], films: [])
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+
+        let image0url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=pe")!
+        let image1url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=pt")!
+        loader.completePeopleLoading(with: [people0, people1])
+
+        XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL request until image is near visible")
+
+        sut.simulatePeopleImageViewNearVisible(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [image0url], "Expected first image URL request once first image is near visible")
+
+        sut.simulatePeopleImageViewNearVisible(at: 1)
+        XCTAssertEqual(loader.loadedImageURLs, [image0url, image1url], "Expected second image URL request once second image is near visible")
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: SwappViewController, loader: LoaderSpy) {
