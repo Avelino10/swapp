@@ -19,7 +19,13 @@ public final class SwappViewController: UITableViewController {
         loader?.load { [weak self] result in
             if let people = try? result.get() {
                 self?.tableModel.append(people)
-                self?.tableView.reloadData()
+                if Thread.isMainThread {
+                    self?.tableView.reloadData()
+                } else {
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
+                    }
+                }
             }
         }
     }

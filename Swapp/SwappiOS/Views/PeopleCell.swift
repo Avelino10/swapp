@@ -8,7 +8,7 @@
 import UIKit
 
 public final class PeopleCell: UITableViewCell {
-    public let name = UILabel()
-    public let language = UILabel()
-    public let vehicles = UILabel()
+    @IBOutlet public var name: UILabel!
+    @IBOutlet public var language: UILabel!
+    @IBOutlet public var vehicles: UILabel!
 }

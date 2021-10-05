@@ -59,6 +59,11 @@
                                         <constraint firstItem="5ah-Bt-g6c" firstAttribute="top" secondItem="R1s-Tf-zsv" secondAttribute="topMargin" priority="999" constant="6" id="t3x-yC-SPy"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="language" destination="ViW-Gp-mK8" id="rt4-5F-osb"/>
+                                    <outlet property="name" destination="6ZQ-bb-L7n" id="0fI-tx-fkN"/>
+                                    <outlet property="vehicles" destination="bTd-KO-9gj" id="iRg-sm-EEq"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

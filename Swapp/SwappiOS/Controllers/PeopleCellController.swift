@@ -17,12 +17,11 @@ final class PeopleCellController {
     }
 
     func view(in tableView: UITableView) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleCell") as! PeopleCell
-        self.cell = cell
-        cell.name.text = model.name
-        cell.language.text = model.species[0].language
-        cell.vehicles.text = model.vehicles[0].name
+        self.cell = tableView.dequeueReusableCell()
+        cell?.name.text = model.name
+        cell?.language.text = model.species[0].language
+        cell?.vehicles.text = model.vehicles[0].name
 
-        return cell
+        return cell!
     }
 }
