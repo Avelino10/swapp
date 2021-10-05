@@ -19,8 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let remoteClient = URLSessionHTTPClient(session: .shared)
         let loader = RemoteStarWarsLoader(url: peopleURL, client: remoteClient)
+        let imageLoader = RemoteStarWarsImageDataLoader(client: remoteClient)
 
-        let swappViewController = PeopleUIComposer.launchComposedWith(loader: loader)
+        let swappViewController = PeopleUIComposer.launchComposedWith(loader: loader, imageDataLoader: imageLoader)
 
         window?.rootViewController = swappViewController
     }

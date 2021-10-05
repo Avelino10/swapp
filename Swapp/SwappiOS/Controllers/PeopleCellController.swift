@@ -24,12 +24,20 @@ final class PeopleCellController {
         cell?.name.text = model.name
 
         if !model.species.isEmpty {
-            let url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=\(model.species[0].language)")!
+            let language = model.species[0].language
+
+            let url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=\(language.getAcronyms())")!
             task = imageLoader.loadImageData(from: url) { [weak cell] result in
                 let data = try? result.get()
 
                 if let image = data.map(UIImage.init) {
-                    cell?.languageImage.image = image
+                    if Thread.isMainThread {
+                        cell?.languageImage.image = image
+                    } else {
+                        DispatchQueue.main.async {
+                            cell?.languageImage.image = image
+                        }
+                    }
                 }
             }
         } else {
@@ -57,5 +65,17 @@ final class PeopleCellController {
     deinit {
         cell = nil
         task?.cancel()
+    }
+}
+
+extension String {
+    public func getAcronyms(separator: String = "") -> String {
+        var acronyms = components(separatedBy: " ").filter { !$0.isEmpty }.map({ String($0.first!) }).joined(separator: separator)
+
+        if acronyms.count == 1 {
+            acronyms = "\(prefix(1))\(suffix(1))"
+        }
+
+        return acronyms
     }
 }
