@@ -19,10 +19,15 @@ class RemoteStarWarsImageDataLoader {
     }
 
     func loadImageData(from url: URL, completion: @escaping (StarWarsImageDataLoader.Result) -> Void) {
-        client.get(from: url) { result in
+        client.get(from: url) { [weak self] result in
+            guard self != nil else { return }
             switch result {
-                case .success:
-                    completion(.failure(Error.invalidData))
+                case let .success((data, response)):
+                    if response.statusCode == 200, !data.isEmpty {
+                        completion(.success(data))
+                    } else {
+                        completion(.failure(Error.invalidData))
+                    }
                 case let .failure(error):
                     completion(.failure(error))
             }
@@ -74,6 +79,37 @@ class RemoteStarWarsImageDataLoaderTests: XCTestCase {
                 client.complete(withStatusCode: code, data: anyData(), at: index)
             })
         }
+    }
+
+    func test_loadImageDataFromURL_deliversInvalidDataErrorOn200HTTPResponseWithEmptyData() {
+        let (sut, client) = makeSUT()
+
+        expect(sut, toCompleteWith: failure(.invalidData), when: {
+            let emptyData = Data()
+            client.complete(withStatusCode: 200, data: emptyData)
+        })
+    }
+
+    func test_loadImageDataFromURL_deliversNonEmptyReceivedDataOn200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        let nonEmptyData = anyData()
+
+        expect(sut, toCompleteWith: .success(nonEmptyData), when: {
+            client.complete(withStatusCode: 200, data: nonEmptyData)
+        })
+    }
+
+    func test_loadImageDataFromURL_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
+        let client = HTTPClientSpy()
+        var sut: RemoteStarWarsImageDataLoader? = RemoteStarWarsImageDataLoader(client: client)
+
+        var capturedResults = [StarWarsImageDataLoader.Result]()
+        sut?.loadImageData(from: URL(string: "http://a-url.com")!) { capturedResults.append($0) }
+
+        sut = nil
+        client.complete(withStatusCode: 200, data: anyData())
+
+        XCTAssertTrue(capturedResults.isEmpty)
     }
 
     // MARK: - Helpers
