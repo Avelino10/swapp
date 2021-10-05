@@ -9,14 +9,9 @@ import Swapp
 import UIKit
 
 public final class SwappViewController: UITableViewController {
-    private var loader: StarWarsLoader?
+    var loader: StarWarsLoader?
     private var tableModel = [People]()
     private var cellControllers = [IndexPath: PeopleCellController]()
-
-    public convenience init(loader: StarWarsLoader) {
-        self.init()
-        self.loader = loader
-    }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +29,7 @@ public final class SwappViewController: UITableViewController {
     }
 
     override public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        cellController(forRowAt: indexPath).view()
+        cellController(forRowAt: indexPath).view(in: tableView)
     }
 
     private func cellController(forRowAt indexPath: IndexPath) -> PeopleCellController {

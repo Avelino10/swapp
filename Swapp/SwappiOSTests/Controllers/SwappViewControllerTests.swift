@@ -40,7 +40,7 @@ final class SwappViewControllerTests: XCTestCase {
 
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: SwappViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let sut = SwappViewController(loader: loader)
+        let sut = PeopleUIComposer.launchComposedWith(loader: loader)
 
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
