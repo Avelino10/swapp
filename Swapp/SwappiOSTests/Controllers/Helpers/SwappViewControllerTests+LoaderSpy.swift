@@ -23,6 +23,10 @@ extension SwappViewControllerTests {
             peopleCompletions.append(completion)
         }
 
+        func loadNext(completion: @escaping (StarWarsLoader.Result) -> Void) {
+            peopleCompletions.append(completion)
+        }
+
         func completePeopleLoading(with people: [People] = [], at index: Int = 0) {
             peopleCompletions[index](.success(people))
         }

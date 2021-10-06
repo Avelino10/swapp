@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -73,6 +74,7 @@
                                     </subviews>
                                 </stackView>
                             </subviews>
+                            <viewLayoutGuide key="safeArea" id="2zM-wI-m0q"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="NVQ-s4-JTm" firstAttribute="leading" secondItem="aEN-G2-qcL" secondAttribute="leading" id="EQQ-Oh-4ZM"/>
@@ -80,11 +82,6 @@
                                 <constraint firstAttribute="trailing" secondItem="NVQ-s4-JTm" secondAttribute="trailing" id="dov-Pe-laO"/>
                                 <constraint firstAttribute="bottom" secondItem="NVQ-s4-JTm" secondAttribute="bottom" id="vIR-Kg-0r5"/>
                             </constraints>
-                        </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="v4h-Ft-Kin">
-                            <rect key="frame" x="0.0" y="219" width="414" height="16"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PeopleCell" rowHeight="108" id="Q3X-sp-GlN" customClass="PeopleCell" customModule="SwappiOS" customModuleProvider="target">

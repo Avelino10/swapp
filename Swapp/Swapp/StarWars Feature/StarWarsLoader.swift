@@ -11,4 +11,5 @@ public protocol StarWarsLoader {
     typealias Result = Swift.Result<[People], Error>
 
     func load(completion: @escaping (Result) -> Void)
+    func loadNext(completion: @escaping (Result) -> Void)
 }

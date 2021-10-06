@@ -10,10 +10,12 @@ import Foundation
 public class RemoteStarWarsLoader: StarWarsLoader {
     private let client: HTTPClient
     private let url: URL
+    private var nextUrl: URL?
 
     public enum Error: Swift.Error {
         case connectivity
         case invalidData
+        case noNextPage
     }
 
     public typealias Result = StarWarsLoader.Result
@@ -27,49 +29,65 @@ public class RemoteStarWarsLoader: StarWarsLoader {
     public func load(completion: @escaping (Result) -> Void) {
         client.get(from: url) { [weak self] result in
             guard self != nil else { return }
-            switch result {
-                case let .success((data, response)):
-                    if response.isOK, let root = try? JSONDecoder().decode(Root.self, from: data) {
-                        let dispatchGroup = DispatchGroup()
-                        var peopleList = [People]()
+            self?.handleResult(result, completion: completion)
+        }
+    }
 
-                        for peopleApi in root.results {
-                            dispatchGroup.enter()
+    public func loadNext(completion: @escaping (Result) -> Void) {
+        guard let nextUrl = nextUrl else {
+            completion(.failure(Error.noNextPage))
+            return
+        }
 
-                            self?.getSpecies(peopleApi.species, people: peopleApi.people) { speciesResult in
-                                if let people = try? speciesResult.get() {
-                                    self?.getVehicles(peopleApi.vehicles, people: people) { vehiclesResult in
-                                        if let newPeople = try? vehiclesResult.get() {
-                                            self?.getFilms(peopleApi.films, people: newPeople) { filmsResult in
-                                                if let finalPeople = try? filmsResult.get() {
-                                                    peopleList.append(finalPeople)
-                                                } else {
-                                                    peopleList.append(newPeople)
-                                                }
+        client.get(from: nextUrl) { [weak self] result in
+            guard self != nil else { return }
+            self?.handleResult(result, completion: completion)
+        }
+    }
 
-                                                dispatchGroup.leave()
+    private func handleResult(_ result: HTTPClient.Result, completion: @escaping (Result) -> Void) {
+        switch result {
+            case let .success((data, response)):
+                if response.isOK, let root = try? JSONDecoder().decode(Root.self, from: data) {
+                    let dispatchGroup = DispatchGroup()
+                    var peopleList = [People]()
+                    nextUrl = root.next
+                    for peopleApi in root.results {
+                        dispatchGroup.enter()
+
+                        getSpecies(peopleApi.species, people: peopleApi.people) { speciesResult in
+                            if let people = try? speciesResult.get() {
+                                self.getVehicles(peopleApi.vehicles, people: people) { vehiclesResult in
+                                    if let newPeople = try? vehiclesResult.get() {
+                                        self.getFilms(peopleApi.films, people: newPeople) { filmsResult in
+                                            if let finalPeople = try? filmsResult.get() {
+                                                peopleList.append(finalPeople)
+                                            } else {
+                                                peopleList.append(newPeople)
                                             }
-                                        } else {
-                                            peopleList.append(people)
+
                                             dispatchGroup.leave()
                                         }
+                                    } else {
+                                        peopleList.append(people)
+                                        dispatchGroup.leave()
                                     }
-                                } else {
-                                    peopleList.append(peopleApi.people)
-                                    dispatchGroup.leave()
                                 }
+                            } else {
+                                peopleList.append(peopleApi.people)
+                                dispatchGroup.leave()
                             }
                         }
-
-                        dispatchGroup.notify(queue: .main) {
-                            completion(.success(peopleList))
-                        }
-                    } else {
-                        completion(.failure(Error.invalidData))
                     }
-                case .failure:
-                    completion(.failure(Error.connectivity))
-            }
+
+                    dispatchGroup.notify(queue: .main) {
+                        completion(.success(peopleList))
+                    }
+                } else {
+                    completion(.failure(Error.invalidData))
+                }
+            case .failure:
+                completion(.failure(Error.connectivity))
         }
     }
 }
