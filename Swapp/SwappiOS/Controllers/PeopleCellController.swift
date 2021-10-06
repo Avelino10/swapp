@@ -49,9 +49,11 @@ final class PeopleCellController {
     }
 
     public func preload() {
-        let language = model.species[0].language
-        let url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=\(language.getAcronyms())")!
-        task = imageLoader.loadImageData(from: url) { _ in }
+        if !model.species.isEmpty {
+            let language = model.species[0].language
+            let url = URL(string: "https://eu.ui-avatars.com/api/?size=512&name=\(language.getAcronyms())")!
+            task = imageLoader.loadImageData(from: url) { _ in }
+        }
     }
 
     public func cancelLoad() {

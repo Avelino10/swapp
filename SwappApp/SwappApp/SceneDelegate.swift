@@ -23,6 +23,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let swappViewController = PeopleUIComposer.launchComposedWith(loader: loader, imageDataLoader: imageLoader)
 
-        window?.rootViewController = swappViewController
+        let bundle = Bundle(for: SceneDelegate.self)
+        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+        let aboutViewController = storyboard.instantiateInitialViewController()!
+
+        let charactersTabBarItem = UITabBarItem(title: "Characters", image: nil, selectedImage: nil)
+        let aboutTabBarItem = UITabBarItem(title: "About", image: nil, selectedImage: nil)
+
+        swappViewController.tabBarItem = charactersTabBarItem
+        aboutViewController.tabBarItem = aboutTabBarItem
+
+        let tabBar = UITabBarController()
+        tabBar.setViewControllers([swappViewController, aboutViewController], animated: true)
+        window?.rootViewController = tabBar
     }
 }
