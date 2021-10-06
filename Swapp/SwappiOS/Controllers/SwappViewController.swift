@@ -55,6 +55,12 @@ public final class SwappViewController: UITableViewController, UITableViewDataSo
         cellControllers[indexPath] = nil
     }
 
+    override public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        cellControllers[indexPath]?.select(callback: { vc in
+            navigationController?.pushViewController(vc, animated: true)
+        })
+    }
+
     private func createSpinnerFooter() -> UIView {
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
 

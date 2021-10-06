@@ -21,20 +21,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let loader = RemoteStarWarsLoader(url: peopleURL, client: remoteClient)
         let imageLoader = RemoteStarWarsImageDataLoader(client: remoteClient)
 
-        let swappViewController = PeopleUIComposer.launchComposedWith(loader: loader, imageDataLoader: imageLoader)
+        let swappNavigationController = UINavigationController(rootViewController: PeopleUIComposer.launchComposedWith(loader: loader, imageDataLoader: imageLoader))
 
         let bundle = Bundle(for: SceneDelegate.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
         let aboutViewController = storyboard.instantiateInitialViewController()!
 
-        let charactersTabBarItem = UITabBarItem(title: "Characters", image: nil, selectedImage: nil)
-        let aboutTabBarItem = UITabBarItem(title: "About", image: nil, selectedImage: nil)
+        let charactersTabBarItem = UITabBarItem(title: "Characters", image: UIImage(systemName: "person.3"), selectedImage: UIImage(systemName: "person.3.fill"))
+        let aboutTabBarItem = UITabBarItem(title: "About", image: UIImage(systemName: "a.square"), selectedImage: UIImage(systemName: "a.square.fill"))
 
-        swappViewController.tabBarItem = charactersTabBarItem
+        swappNavigationController.tabBarItem = charactersTabBarItem
         aboutViewController.tabBarItem = aboutTabBarItem
 
         let tabBar = UITabBarController()
-        tabBar.setViewControllers([swappViewController, aboutViewController], animated: true)
+        tabBar.setViewControllers([swappNavigationController, aboutViewController], animated: true)
         window?.rootViewController = tabBar
     }
 }

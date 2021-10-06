@@ -40,7 +40,8 @@ final class PeopleCellController {
                 }
             }
         } else {
-            cell?.languageImage.image = nil
+            cell?.languageImage.image = UIImage(systemName: "xmark")
+            cell?.languageImage.tintColor = .black
         }
 
         cell?.vehicles.text = model.vehicles.isEmpty ? "no vehicles" : getVehicleNames(from: model.vehicles)
@@ -58,6 +59,16 @@ final class PeopleCellController {
 
     public func cancelLoad() {
         task?.cancel()
+    }
+
+    public func select(callback: (UIViewController) -> Void) {
+        let bundle = Bundle(for: PeopleCellController.self)
+        let storyboard = UIStoryboard(name: "People", bundle: bundle)
+        let peopleDetailViewController = storyboard.instantiateViewController(withIdentifier: "PeopleDetailViewController") as! PeopleDetailViewController
+        peopleDetailViewController.model = model
+        peopleDetailViewController.title = "Character Detail"
+
+        callback(peopleDetailViewController)
     }
 
     private func getVehicleNames(from vehicles: [Vehicle]) -> String {

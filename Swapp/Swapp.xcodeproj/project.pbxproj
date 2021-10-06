@@ -30,6 +30,7 @@
 		FD05B5AE270CDDB800C75E9F /* UIImage+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B5AD270CDDB800C75E9F /* UIImage+TestHelpers.swift */; };
 		FD05B5B0270CE32800C75E9F /* RemoteStarWarsImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B5AF270CE32800C75E9F /* RemoteStarWarsImageDataLoader.swift */; };
 		FD05B5B2270CE52500C75E9F /* HTTPURLResponse+StatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B5B1270CE52500C75E9F /* HTTPURLResponse+StatusCode.swift */; };
+		FD05B5B4270DA85900C75E9F /* PeopleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05B5B3270DA85900C75E9F /* PeopleDetailViewController.swift */; };
 		FDB91FF92705C74700A0BB82 /* Swapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB91FF02705C74700A0BB82 /* Swapp.framework */; };
 		FDB920092705C82B00A0BB82 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB920082705C82B00A0BB82 /* People.swift */; };
 		FDB9200B2705C94100A0BB82 /* Film.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB9200A2705C94100A0BB82 /* Film.swift */; };
@@ -102,6 +103,7 @@
 		FD05B5AD270CDDB800C75E9F /* UIImage+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+TestHelpers.swift"; sourceTree = "<group>"; };
 		FD05B5AF270CE32800C75E9F /* RemoteStarWarsImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteStarWarsImageDataLoader.swift; sourceTree = "<group>"; };
 		FD05B5B1270CE52500C75E9F /* HTTPURLResponse+StatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTPURLResponse+StatusCode.swift"; sourceTree = "<group>"; };
+		FD05B5B3270DA85900C75E9F /* PeopleDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetailViewController.swift; sourceTree = "<group>"; };
 		FDB91FF02705C74700A0BB82 /* Swapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Swapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDB91FF82705C74700A0BB82 /* SwappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDB920082705C82B00A0BB82 /* People.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			children = (
 				FD05B54E270C4D8300C75E9F /* SwappViewController.swift */,
 				FD05B55C270C54F200C75E9F /* PeopleCellController.swift */,
+				FD05B5B3270DA85900C75E9F /* PeopleDetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				FD05B564270C5D5E00C75E9F /* UITableViewCell+Dequeueing.swift in Sources */,
 				FD05B551270C4EDB00C75E9F /* PeopleCell.swift in Sources */,
 				FD05B55D270C54F200C75E9F /* PeopleCellController.swift in Sources */,
+				FD05B5B4270DA85900C75E9F /* PeopleDetailViewController.swift in Sources */,
 				FD05B54F270C4D8300C75E9F /* SwappViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
